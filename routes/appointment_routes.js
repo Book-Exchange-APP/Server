@@ -4,7 +4,7 @@ import { AppointmentModel } from '../db.js'
 const router = express.Router()
 
 router.get('/', async (req, res) => {
-    res.send(await AppointmentModel.find())
+    res.send(await AppointmentModel.find().populate([{path : 'inc_book', select: 'title'}, {path : 'out_book', select: 'title'}]))
 })
 
 router.post('/', async (req, res) => {

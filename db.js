@@ -18,13 +18,13 @@ try {
 catch (err) {
     console.log(err)
 }
-//{ type: mongoose.ObjectID, ref: 'Location'}
+
 // Define Book schema
 const bookSchema = new mongoose.Schema({
     title: { type: String, required: true },
     author: { type: String, required: true },
     condition: { type: String, required: true },
-    location: { type: String, required: true },
+    location: { type: mongoose.ObjectId, ref: 'Location', required: true },
     language: { type: String, required: true },
     img: { type: String, required: true },
     genre: { type: String, required: true },
@@ -33,15 +33,13 @@ const bookSchema = new mongoose.Schema({
 
 // Create book model based on schema
 const BookModel = mongoose.model('Book', bookSchema)
-
+// { type: mongoose.ObjectId, ref: 'Book', required: true }
 // Define Appointment schema
 const appointmentSchema = new mongoose.Schema({
     first_name: { type: String, required: true },
     last_name: { type: String, required: true },
-    //incoming book id
-    inc_book: { type: String, required: true },
-    //outgoing book id from DB
-    out_book: { type: String, required: true },
+    inc_book: { type: mongoose.ObjectId, ref: 'Book', required: true },
+    out_book: { type: mongoose.ObjectId, ref: 'Book', required: true },
     time: { type: String, required: true },
     date: { type: String, required: true },
     status: { type: String, required: true }
