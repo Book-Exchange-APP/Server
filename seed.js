@@ -91,7 +91,7 @@ const appointments = [
         inc_book: book[2],
         out_book: book[3],
         time: '1300',
-        date: '12/2/2023',
+        date: '04/12/2022',
         status: 'Pending'
     }
 ]
@@ -110,5 +110,6 @@ const users = [
 
 await UserModel.insertMany(users)
 console.log('Inserted users')
+
 
 dbClose()

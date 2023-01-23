@@ -4,12 +4,12 @@ import { BookModel } from '../db.js'
 const router = express.Router()
 
 router.get('/', async (req, res) => {
-    res.send(await BookModel.find().populate({ path: 'location', select: 'location'}))
+    res.send(await BookModel.find().populate({ path: 'location'}))
 })
 
 router.get('/:id',async (req, res) => {
     try {
-        const book = await BookModel.findById(req.params.id)
+        const book = await BookModel.findById(req.params.id).populate({ path: 'location'})
         if (book) {
             res.send(book)
         } else {

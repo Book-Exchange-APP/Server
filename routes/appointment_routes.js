@@ -4,17 +4,16 @@ import { AppointmentModel } from '../db.js'
 const router = express.Router()
 
 router.get('/', async (req, res) => {
-    res.send(await AppointmentModel.find().populate([{path : 'inc_book', select: 'title'}, {path : 'out_book', select: 'title'}]))
+    res.send(await AppointmentModel.find().populate([{path : 'inc_book'}, {path : 'out_book'}]))
 })
 
 router.post('/', async (req, res) => {
     try {
-    // Create new appointment
-    // Destructure req object 
-    const { name, inc_book, out_book, date, location, status} = req.body
-    // Validate by creating new appointment object from values passed in.
-    const newAppointment = { name, inc_book, out_book, date, location, status }
-    // Push newAppointment to Database
+    // Needs to be amended to accept incoming book details and book selected
+    const { first_name, last_name, inc_book, out_book, time, date, status } = req.body
+   
+    const newAppointment = { first_name, last_name, inc_book, out_book, time, date, status }
+
     const insertedAppointment = await AppointmentModel.create(newAppointment)
     res.status(201).send(insertedAppointment)
     }
@@ -25,7 +24,7 @@ router.post('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-    const appointment = await AppointmentModel.findById(req.params.id)
+    const appointment = await AppointmentModel.findById(req.params.id).populate([{path : 'inc_book'}, {path : 'out_book'}])
     if (appointment) {
         res.send(appointment)
     } else {
