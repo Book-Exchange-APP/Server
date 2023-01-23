@@ -21,8 +21,14 @@ catch (err) {
 
 // Define Book schema
 const bookSchema = new mongoose.Schema({
-    title: { type: String, required: true}, 
-    author: { type: String, required: true}
+    title: { type: String, required: true },
+    author: { type: String, required: true },
+    condition: { type: String, required: true },
+    location: { type: String, required: true },
+    language: { type: String, required: true },
+    img: { type: String, required: true },
+    genre: { type: String, required: true },
+    description: { type: String, required: true, maxLength: 100 }
 })
 
 // Create book model based on schema
@@ -30,12 +36,15 @@ const BookModel = mongoose.model('Book', bookSchema)
 
 // Define Appointment schema
 const appointmentSchema = new mongoose.Schema({
-    name: { type: String, required: true}, 
-    inc_book: { type: String, required: true},
-    out_book: { type: String, required: true},
-    date: { type: String, required: true},
-    location: { type: String, required: true},
-    status: { type: String, required: true}
+    first_name: { type: String, required: true },
+    last_name: { type: String, required: true },
+    //incoming book id
+    inc_book: { type: String, required: true },
+    //outgoing book id from DB
+    out_book: { type: String, required: true },
+    time: { type: String, required: true },
+    date: { type: String, required: true },
+    status: { type: String, required: true }
 })
 
 // Create appointment model based on schema
@@ -43,10 +52,10 @@ const AppointmentModel = mongoose.model('Appointment', appointmentSchema)
 
 // Define User schema
 const userSchema = new mongoose.Schema({
-    name: { type: String, required: true}, 
-    email: { type: String, required: true},
-    password: { type: String, required: true},
-    status: { type: String, required: true}
+    name: { type: String, required: true }, 
+    email: { type: String, required: true },
+    password: { type: String, required: true },
+    status: { type: String, required: true }
 })
 
 // Create User model based on schema
@@ -54,13 +63,13 @@ const UserModel = mongoose.model('User', userSchema)
 
 // Define Location schema
 const locationSchema = new mongoose.Schema({
-    location: { type: String, required: true}, 
-    address: { type: String, required: true},
-    postcode: { type: Number, required: true},
-    phone: { type: Number, required: true}
+    location: { type: String, required: true }, 
+    address: { type: String, required: true },
+    postcode: { type: Number, required: true },
+    phone: { type: Number, required: true }
 })
 
-// Create appointment model based on schema
+// Create location model based on schema
 const LocationModel = mongoose.model('Location', locationSchema)
 
 export { AppointmentModel, BookModel, UserModel, LocationModel, dbClose }
