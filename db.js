@@ -18,7 +18,7 @@ try {
 catch (err) {
     console.log(err)
 }
-
+//{ type: mongoose.ObjectID, ref: 'Location'}
 // Define Book schema
 const bookSchema = new mongoose.Schema({
     title: { type: String, required: true },

@@ -4,7 +4,7 @@ import { BookModel } from '../db.js'
 const router = express.Router()
 
 router.get('/', async (req, res) => {
-    res.send(await BookModel.find())
+    res.send(await BookModel.find().populate({ path: 'location', select: 'location'}))
 })
 
 router.get('/:id',async (req, res) => {

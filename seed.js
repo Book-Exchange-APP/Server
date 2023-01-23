@@ -26,7 +26,7 @@ const locations = [
     }
 ]
 
-await LocationModel.insertMany(locations)
+const locs = await LocationModel.insertMany(locations)
 console.log('Inserted locations')
 
 const books = [
@@ -34,7 +34,7 @@ const books = [
         title: 'Lord Of The Rings',
         author: 'J. R. R. Tolkien',
         condition: 'Good',
-        location: locations[1],
+        location: locs[1],
         language: 'English',
         img: 'IMAGE',
         genre: 'Fantasy',
@@ -44,7 +44,7 @@ const books = [
         title: 'Game of Thrones',
         author: 'George R. R. Martin',
         condition: 'Good',
-        location: locations[2],
+        location: locs[2],
         language: 'English',
         img: 'IMAGE',
         genre: 'Fantasy',
@@ -54,7 +54,7 @@ const books = [
         title: 'Winnie the Pooh',
         author: 'A. A. Milne',
         condition: 'Good',
-        location: locations[0],
+        location: locs[0],
         language: 'English',
         img: 'IMAGE',
         genre: 'Fantasy',
@@ -64,7 +64,7 @@ const books = [
         title: 'Matilda',
         author: 'Rohld Dahl',
         condition: 'Good',
-        location: locations[0],
+        location: locs[0],
         language: 'English',
         img: 'IMAGE',
         genre: 'Fantasy',
@@ -72,22 +72,40 @@ const books = [
     },
 ]
 
-await BookModel.insertMany(books)
+const book = await BookModel.insertMany(books)
 console.log('Inserted books')
 
-await LocationModel.insertMany(locations)
-console.log('Inserted locations')
-
 const appointments = [
-    { name: 'Tom Cruise', inc_book: 'Dune', out_book: 'Matilda', date: '12/2/2023', location: 'Brisbane City' , status: 'Pending'},
-    { name: 'Betty White', inc_book: 'How to Kill a Mockingbird', out_book: 'Winnie the Pooh', date: '23/4/2023', location: 'South Brisbane' , status: 'Pending'}
+    {
+        first_name: 'Tom',
+        last_name: 'Cruise',
+        inc_book: book[0],
+        out_book: book[1],
+        time: '1300',
+        date: '12/2/2023',
+        status: 'Pending'
+    },
+    {
+        first_name: 'Betty',
+        last_name: 'White',
+        inc_book: book[2],
+        out_book: book[3],
+        time: '1300',
+        date: '12/2/2023',
+        status: 'Pending'
+    }
 ]
 
 await AppointmentModel.insertMany(appointments)
 console.log('Inserted appointments')
 
 const users = [
-    { name: 'Mary Smith', email: 'mary@bookstore.com', password: 'admin', status: 'admin'}
+    {
+        name: 'Mary Smith',
+        email: 'mary@bookstore.com',
+        password: 'admin',
+        status: 'admin'
+    }
 ]
 
 await UserModel.insertMany(users)
