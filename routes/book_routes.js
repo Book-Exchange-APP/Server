@@ -1,21 +1,30 @@
-import express from 'express'
-import { BookModel } from '../db.js'
+import express from "express"
+import { BookModel } from "../db.js"
 
 const router = express.Router()
 
 // Get All Books ordered by latest arrival
-router.get('/', async (req, res) => {
-    res.send(await BookModel.find().sort({time_stamp: -1}).populate({ path: 'location'}))
+// route :"/books",
+// type : "GET",
+// action : "Retrieves all Books ordered by Latest arrival",
+// returns : "Array of books"
+
+router.get("/", async (req, res) => {
+    res.send(await BookModel.find().sort({time_stamp: -1}).populate({ path: "location"}))
 })
 
 // Get book by ID
-router.get('/:id',async (req, res) => {
+// route :"/books/:id",
+// type : "GET",
+// action : "Retrieves single book from ID input",
+// returns : "Single book"
+router.get("/:id",async (req, res) => {
     try {
-        const book = await BookModel.findById(req.params.id).populate({ path: 'location'})
+        const book = await BookModel.findById(req.params.id).populate({ path: "location"})
         if (book) {
             res.send(book)
         } else {
-            res.status(404).send({ error: 'Book not found' })
+            res.status(404).send({ error: "Book not found" })
         }}
         catch (err) {
             res.status(500).send ({ error : err.message })
@@ -23,17 +32,21 @@ router.get('/:id',async (req, res) => {
 })
 
 // Update status of book
-router.put('/:id', async (req, res) => {
+// route :"/books/:id",
+// type : "PUT",
+// action : "Updates new book in database",
+// returns : "Updated book"
+router.put("/:id", async (req, res) => {
 
     const { title, author, condition, location, language, img, genre, description, status } = req.body
     const updatedBook = { title, author, condition, location, language, img, genre, description, status }
   
     try {
-      const book = await BookModel.findByIdAndUpdate(req.params.id, updatedBook, { returnDocument: 'after' })
+      const book = await BookModel.findByIdAndUpdate(req.params.id, updatedBook, { returnDocument: "after" })
       if (book) {
         res.send(book)
       } else {
-        res.status(404).send({ error: 'Book not found' })
+        res.status(404).send({ error: "Book not found" })
       }
     }
     catch (err) {
@@ -43,13 +56,18 @@ router.put('/:id', async (req, res) => {
   })
 
 // Get Book by Title
-router.get('/title/:title',async (req, res) => {
+// route :"/books/title/:title",
+// type : "GET",
+// action : "Retrieves all books in database with matching title input",
+// returns : "Array of books"
+
+router.get("/title/:title",async (req, res) => {
     try {
-        const book = await BookModel.findOne({ title: req.params.title }).populate({ path: 'location'})
+        const book = await BookModel.findOne({ title: req.params.title }).populate({ path: "location"})
         if (book) {
             res.send(book)
         } else {
-            res.status(404).send({ error: 'Book not found' })
+            res.status(404).send({ error: "Book not found" })
         }}
         catch (err) {
             res.status(500).send ({ error : err.message })
@@ -57,13 +75,18 @@ router.get('/title/:title',async (req, res) => {
 })
 
 // Get All Books by Author
-router.get('/author/:author',async (req, res) => {
+// route :"/books/author/:author",
+// type : "GET",
+// action : "Retrieves all books in database with matching author input",
+// returns : "Array of books"
+
+router.get("/author/:author",async (req, res) => {
     try {
-        const book = await BookModel.find({ author: req.params.author }).populate({ path: 'location'})
+        const book = await BookModel.find({ author: req.params.author }).populate({ path: "location"})
         if (book) {
             res.send(book)
         } else {
-            res.status(404).send({ error: 'Book not found' })
+            res.status(404).send({ error: "Book not found" })
         }}
         catch (err) {
             res.status(500).send ({ error : err.message })
@@ -71,13 +94,18 @@ router.get('/author/:author',async (req, res) => {
 })
 
 // Get All Books by Genre
-router.get('/genre/:genre',async (req, res) => {
+// route :"/books/genre/:genre",
+// type : "GET",
+// action : "Retrieves all books in database with matching genre input",
+// returns : "Array of books"
+
+router.get("/genre/:genre",async (req, res) => {
     try {
-        const book = await BookModel.find({ genre: req.params.genre }).populate({ path: 'location'})
+        const book = await BookModel.find({ genre: req.params.genre }).populate({ path: "location"})
         if (book) {
             res.send(book)
         } else {
-            res.status(404).send({ error: 'Book not found' })
+            res.status(404).send({ error: "Book not found" })
         }}
         catch (err) {
             res.status(500).send ({ error : err.message })
@@ -85,7 +113,11 @@ router.get('/genre/:genre',async (req, res) => {
 })
 
 // Create new Book
-router.post('/', async (req, res) => {
+// route :"/books",
+// type : "POST",
+// action : "Creates new book in database",
+// returns : "Created book"
+router.post("/", async (req, res) => {
     try {
 
     const { title, author, condition, location, language, img, genre, description } = req.body

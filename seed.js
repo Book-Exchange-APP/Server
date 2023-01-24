@@ -27,224 +27,224 @@ const locations = [
 ]
 
 const locs = await LocationModel.insertMany(locations)
-console.log('Inserted locations')
+console.log("Inserted locations")
 
 const books = [
     {
-        title: 'Lord Of The Rings',
-        author: 'J. R. R. Tolkien',
-        condition: 'Good',
+        title: "Lord Of The Rings",
+        author: "J. R. R. Tolkien",
+        condition: "Good",
         location: locs[1],
-        language: 'English',
-        img: 'IMAGE',
-        genre: 'Fantasy',
-        description: 'One ring to rule them all',
-        status: 'Available'
+        language: "English",
+        img: "IMAGE",
+        genre: "Fantasy",
+        description: "One ring to rule them all",
+        status: "Available"
 
     },
     {
-        title: 'Game of Thrones',
-        author: 'George R. R. Martin',
-        condition: 'Good',
+        title: "Game of Thrones",
+        author: "George R. R. Martin",
+        condition: "Good",
         location: locs[2],
-        language: 'English',
-        img: 'IMAGE',
-        genre: 'Fantasy',
-        description: 'Winter is Coming',
-        status: 'Available'
+        language: "English",
+        img: "IMAGE",
+        genre: "Fantasy",
+        description: "Winter is Coming",
+        status: "Available"
     },
     {
-        title: 'Winnie the Pooh',
-        author: 'A. A. Milne',
-        condition: 'Good',
+        title: "Winnie the Pooh",
+        author: "A. A. Milne",
+        condition: "Good",
         location: locs[0],
-        language: 'English',
-        img: 'IMAGE',
-        genre: 'Childrens',
+        language: "English",
+        img: "IMAGE",
+        genre: "Childrens",
         description: "Somebody's eaten all the Honey",
-        status: 'Available'
+        status: "Available"
     },
     {
-        title: 'Matilda',
-        author: 'Roald Dahl',
-        condition: 'Good',
+        title: "Matilda",
+        author: "Roald Dahl",
+        condition: "Good",
         location: locs[0],
-        language: 'English',
-        img: 'IMAGE',
-        genre: 'Childrens',
+        language: "English",
+        img: "IMAGE",
+        genre: "Childrens",
         description: "Matilda, Matilda she's really very small. But inside she's TALL",
-        status: 'Unavailable'
+        status: "Unavailable"
     },
     {
-        title: 'BFG',
-        author: 'Roald Dahl',
-        condition: 'Poor',
+        title: "BFG",
+        author: "Roald Dahl",
+        condition: "Poor",
         location: locs[0],
-        language: 'English',
-        img: 'IMAGE',
-        genre: 'Childrens',
+        language: "English",
+        img: "IMAGE",
+        genre: "Childrens",
         description: "Big friendly giant befriending a child.",
-        status: 'Available'
+        status: "Available"
     },
     {
-        title: 'War of the Worlds',
-        author: 'H.G. Wells',
-        condition: 'Poor',
+        title: "War of the Worlds",
+        author: "H.G. Wells",
+        condition: "Poor",
         location: locs[1],
-        language: 'English',
-        img: 'IMAGE',
-        genre: 'Science Fiction',
+        language: "English",
+        img: "IMAGE",
+        genre: "Science Fiction",
         description: "You're a wizard Harry",
-        status: 'Available'
+        status: "Available"
     },
     {
-        title: 'Dune',
-        author: 'Frank Herbert',
-        condition: 'Poor',
+        title: "Dune",
+        author: "Frank Herbert",
+        condition: "Poor",
         location: locs[1],
-        language: 'English',
-        img: 'IMAGE',
-        genre: 'Science Fiction',
+        language: "English",
+        img: "IMAGE",
+        genre: "Science Fiction",
         description: "You're a wizard Harry",
-        status: 'Available'
+        status: "Available"
     },
     {
-        title: 'Harry Potter and the Philosophers Stone',
-        author: 'J.K. Rowling',
-        condition: 'Poor',
+        title: "Harry Potter and the Philosophers Stone",
+        author: "J.K. Rowling",
+        condition: "Poor",
         location: locs[1],
-        language: 'English',
-        img: 'IMAGE',
-        genre: 'Fantasy',
+        language: "English",
+        img: "IMAGE",
+        genre: "Fantasy",
         description: "You're a wizard Harry",
-        status: 'Available'
+        status: "Available"
     },
     {
-        title: 'Harry Potter and the Chamber of Secrets',
-        author: 'J.K. Rowling',
-        condition: 'Good',
+        title: "Harry Potter and the Chamber of Secrets",
+        author: "J.K. Rowling",
+        condition: "Good",
         location: locs[1],
-        language: 'English',
-        img: 'IMAGE',
-        genre: 'Fantasy',
+        language: "English",
+        img: "IMAGE",
+        genre: "Fantasy",
         description: "You're a wizard Harry",
-        status: 'Available'
+        status: "Available"
     },
     {
-        title: 'Harry Potter and the Prisoner of Azkaban',
-        author: 'J.K. Rowling',
-        condition: 'Excellent',
+        title: "Harry Potter and the Prisoner of Azkaban",
+        author: "J.K. Rowling",
+        condition: "Excellent",
         location: locs[1],
-        language: 'English',
-        img: 'IMAGE',
-        genre: 'Fantasy',
+        language: "English",
+        img: "IMAGE",
+        genre: "Fantasy",
         description: "You're a wizard Harry",
-        status: 'Available'
+        status: "Available"
     },
     {
-        title: 'Harry Potter and the Goblet of Fire',
-        author: 'J.K. Rowling',
-        condition: 'Poor',
+        title: "Harry Potter and the Goblet of Fire",
+        author: "J.K. Rowling",
+        condition: "Poor",
         location: locs[2],
-        language: 'English',
-        img: 'IMAGE',
-        genre: 'Fantasy',
+        language: "English",
+        img: "IMAGE",
+        genre: "Fantasy",
         description: "You're a wizard Harry",
-        status: 'Available'
+        status: "Available"
     },
     {
-        title: 'Harry Potter and the Order of the Phoenix',
-        author: 'J.K. Rowling',
-        condition: 'Excellent',
+        title: "Harry Potter and the Order of the Phoenix",
+        author: "J.K. Rowling",
+        condition: "Excellent",
         location: locs[1],
-        language: 'English',
-        img: 'IMAGE',
-        genre: 'Fantasy',
+        language: "English",
+        img: "IMAGE",
+        genre: "Fantasy",
         description: "You're a wizard Harry",
-        status: 'Available'
+        status: "Available"
     },
     {
-        title: 'Harry Potter and the Half-Blood Prince',
-        author: 'J.K. Rowling',
-        condition: 'Poor',
+        title: "Harry Potter and the Half-Blood Prince",
+        author: "J.K. Rowling",
+        condition: "Poor",
         location: locs[0],
-        language: 'English',
-        img: 'IMAGE',
-        genre: 'Fantasy',
+        language: "English",
+        img: "IMAGE",
+        genre: "Fantasy",
         description: "You're a wizard Harry",
-        status: 'Available'
+        status: "Available"
     },
     {
-        title: 'Harry Potter and the Deathly Hallows',
-        author: 'J.K. Rowling',
-        condition: 'Poor',
+        title: "Harry Potter and the Deathly Hallows",
+        author: "J.K. Rowling",
+        condition: "Poor",
         location: locs[1],
-        language: 'English',
-        img: 'IMAGE',
-        genre: 'Fantasy',
+        language: "English",
+        img: "IMAGE",
+        genre: "Fantasy",
         description: "You're a wizard Harry",
-        status: 'Unavailable'
+        status: "Unavailable"
     },
     {
-        title: 'Harry Potter and the Cursed Child',
-        author: 'J.K. Rowling',
-        condition: 'Poor',
+        title: "Harry Potter and the Cursed Child",
+        author: "J.K. Rowling",
+        condition: "Poor",
         location: locs[2],
-        language: 'English',
-        img: 'IMAGE',
-        genre: 'Fantasy',
+        language: "English",
+        img: "IMAGE",
+        genre: "Fantasy",
         description: "You're a wizard Harry",
-        status: 'Available'
+        status: "Available"
     },
 ]
 
 const book = await BookModel.insertMany(books)
-console.log('Inserted books')
+console.log("Inserted books")
 
 const appointments = [
     {
-        first_name: 'Tom',
-        last_name: 'Cruise',
+        first_name: "Tom",
+        last_name: "Cruise",
         inc_book: book[0],
         out_book: book[1],
-        time: '13:00',
-        date: '12/2/2023',
-        status: 'Pending'
+        time: "13:00",
+        date: "12/2/2023",
+        status: "Pending"
     },
     {
-        first_name: 'Robin',
-        last_name: 'Williams',
+        first_name: "Robin",
+        last_name: "Williams",
         inc_book: book[6],
         out_book: book[8],
-        time: '15:30',
-        date: '02/25/2023',
-        status: 'Pending'
+        time: "15:30",
+        date: "02/25/2023",
+        status: "Pending"
     },
     {
-        first_name: 'Betty',
-        last_name: 'White',
+        first_name: "Betty",
+        last_name: "White",
         inc_book: book[2],
         out_book: book[3],
-        time: '18:00',
-        date: '04/12/2023',
-        status: 'Approved'
+        time: "18:00",
+        date: "04/12/2023",
+        status: "Approved"
     }
 ]
 
 await AppointmentModel.insertMany(appointments)
-console.log('Inserted appointments')
+console.log("Inserted appointments")
 
 const users = [
     {
-        name: 'Mary Smith',
-        email: 'mary@bookstore.com',
-        password: 'admin',
-        status: 'admin'
+        name: "Mary Smith",
+        email: "mary@bookstore.com",
+        password: "admin",
+        status: "admin"
     }
 ]
 
 await UserModel.insertMany(users)
-console.log('Inserted users')
+console.log("Inserted users")
 
 
 dbClose()

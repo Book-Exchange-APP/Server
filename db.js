@@ -1,9 +1,9 @@
-import mongoose from 'mongoose'
-import dotenv from 'dotenv'
+import mongoose from "mongoose"
+import dotenv from "dotenv"
 
 dotenv.config()
 
-mongoose.set('strictQuery', true)
+mongoose.set("strictQuery", true)
 
 // Function to close Database connection
 async function dbClose() {
@@ -14,7 +14,7 @@ async function dbClose() {
 // Connect to MongoDB via Mongoose
 try {
     const m = await mongoose.connect(process.env.ATLAS_DB_URL)
-    console.log(m.connection.readyState === 1 ? 'Mongoose connected!' : 'Mongoose failed to connect')
+    console.log(m.connection.readyState === 1 ? "Mongoose connected!" : "Mongoose failed to connect")
 }
 catch (err) {
     console.log(err)
@@ -29,7 +29,7 @@ const bookSchema = new mongoose.Schema({
     author: { type: String, required: true, maxLength: 50 },
     // Add list of set conditions to choose from oneOf?
     condition: { type: String, required: true },
-    location: { type: mongoose.ObjectId, ref: 'Location', required: true },
+    location: { type: mongoose.ObjectId, ref: "Location", required: true },
     language: { type: String, required: true },
     // change to accept .png files
     img: { type: String, required: true },
@@ -37,18 +37,18 @@ const bookSchema = new mongoose.Schema({
     genre: { type: String, required: true },
     description: { type: String, required: true, maxLength: 100 },
     time_stamp: { type: Number, required: true, default: now },
-    status: { type: String, required: true, default: 'Pending'}
+    status: { type: String, required: true, default: "Pending"}
 })
 
 // Create book model based on schema
-const BookModel = mongoose.model('Book', bookSchema)
+const BookModel = mongoose.model("Book", bookSchema)
 
 // Define Appointment schema
 const appointmentSchema = new mongoose.Schema({
     first_name: { type: String, required: true, maxLength: 50 },
     last_name: { type: String, required: true, maxLength: 50 },
-    inc_book: { type: mongoose.ObjectId, ref: 'Book', required: true },
-    out_book: { type: mongoose.ObjectId, ref: 'Book', required: true },
+    inc_book: { type: mongoose.ObjectId, ref: "Book", required: true },
+    out_book: { type: mongoose.ObjectId, ref: "Book", required: true },
     // Accepts 24hr time format HH:MM
     time: { type: String, required: true, match: /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/ },
     // 
@@ -57,19 +57,19 @@ const appointmentSchema = new mongoose.Schema({
 })
 
 // Create appointment model based on schema
-const AppointmentModel = mongoose.model('Appointment', appointmentSchema)
+const AppointmentModel = mongoose.model("Appointment", appointmentSchema)
 
 // Define User schema
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     // Accespt email type
-    email: { type: String, required: true, unique: true, match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'] },
+    email: { type: String, required: true, unique: true, match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "Please fill a valid email address"] },
     password: { type: String, required: true },
-    status: { type: String, required: true, default: 'Admin' }
+    status: { type: String, required: true, default: "Admin" }
 })
 
 // Create User model based on schema
-const UserModel = mongoose.model('User', userSchema)
+const UserModel = mongoose.model("User", userSchema)
 
 // Define Location schema
 const locationSchema = new mongoose.Schema({
@@ -80,6 +80,6 @@ const locationSchema = new mongoose.Schema({
 })
 
 // Create location model based on schema
-const LocationModel = mongoose.model('Location', locationSchema)
+const LocationModel = mongoose.model("Location", locationSchema)
 
 export { AppointmentModel, BookModel, UserModel, LocationModel, dbClose }

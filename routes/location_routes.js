@@ -1,9 +1,14 @@
-import express from 'express'
-import { LocationModel } from '../db.js'
+import express from "express"
+import { LocationModel } from "../db.js"
 
 const router = express.Router()
 
-router.get('/', async (req, res) => {
+// route :"/locations",
+// type : "GET",
+// action : "Retrieves all locations",
+// returns : "Array of Locations"
+
+router.get("/", async (req, res) => {
     res.send(await LocationModel.find())
 })
 
