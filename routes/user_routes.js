@@ -1,21 +1,21 @@
-import express from 'express'
-import { UserModel } from '../db.js'
+import express from "express"
+import { UserModel } from "../db.js"
 
 const router = express.Router()
 
 // Gets all users
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
     res.send(await UserModel.find())
 })
 
 // Gets users by ID
-router.get('/:id',async (req, res) => {
+router.get("/:id",async (req, res) => {
     try {
         const user = await UserModel.findById(req.params.id)
         if (user) {
             res.send(user)
         } else {
-            res.status(404).send({ error: 'User not found' })
+            res.status(404).send({ error: "User not found" })
         }}
         catch (err) {
             res.status(500).send ({ error : err.message })
@@ -23,7 +23,7 @@ router.get('/:id',async (req, res) => {
 })
 
 // Create new user
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
     try {
     const { name, email, password } = req.body
 
