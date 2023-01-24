@@ -1,5 +1,5 @@
 import express from 'express'
-import { AppointmentModel } from '../db.js'
+import { AppointmentModel, BookModel } from '../db.js'
 
 const router = express.Router()
 
@@ -11,11 +11,15 @@ router.get('/', async (req, res) => {
 // Create new appointment 
 router.post('/', async (req, res) => {
     try {
-    // Needs to be amended to accept incoming book details and book selected
-    // Logic to handle this needs defining.
-    const { first_name, last_name, inc_book, out_book, time, date, status } = req.body
-   
-    const newAppointment = { first_name, last_name, inc_book, out_book, time, date, status }
+    let { first_name, last_name, inc_book, out_book, time, date, status } = req.body
+    // Take incoming book details and create new Book in db
+    const { title, author, condition, location, language, img, genre, description } = req.body.inc_book
+    let time_stamp = Date.now()
+    const newBook = { title, author, condition, location, language, img, genre, description, time_stamp }
+    const insertedBook = await BookModel.create(newBook)
+    // Store inc_book id into variable to create appointment
+    inc_book = insertedBook._id
+    const newAppointment = { first_name, last_name, inc_book , out_book, time, date, status }
 
     const insertedAppointment = await AppointmentModel.create(newAppointment)
     res.status(201).send(insertedAppointment)

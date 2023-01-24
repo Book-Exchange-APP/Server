@@ -5,6 +5,7 @@ dotenv.config()
 
 mongoose.set('strictQuery', true)
 
+// Function to close Database connection
 async function dbClose() {
     await mongoose.connection.close()
     console.log("Database disconnected!")
@@ -26,13 +27,13 @@ let now = Date.now()
 const bookSchema = new mongoose.Schema({
     title: { type: String, required: true, maxLength: 50 },
     author: { type: String, required: true, maxLength: 50 },
-    // Add list of set conditions to choose from
+    // Add list of set conditions to choose from oneOf?
     condition: { type: String, required: true },
     location: { type: mongoose.ObjectId, ref: 'Location', required: true },
     language: { type: String, required: true },
     // change to accept .png files
     img: { type: String, required: true },
-    // Add list of set genres to choose from
+    // Add list of set genres to choose from oneOf?
     genre: { type: String, required: true },
     description: { type: String, required: true, maxLength: 100 },
     time_stamp: { type: Number, required: true, default: now },
@@ -41,7 +42,7 @@ const bookSchema = new mongoose.Schema({
 
 // Create book model based on schema
 const BookModel = mongoose.model('Book', bookSchema)
-// { type: mongoose.ObjectId, ref: 'Book', required: true }
+
 // Define Appointment schema
 const appointmentSchema = new mongoose.Schema({
     first_name: { type: String, required: true, maxLength: 50 },
