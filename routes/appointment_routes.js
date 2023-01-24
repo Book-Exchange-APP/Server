@@ -12,6 +12,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
     // Needs to be amended to accept incoming book details and book selected
+    // Logic to handle this needs defining.
     const { first_name, last_name, inc_book, out_book, time, date, status } = req.body
    
     const newAppointment = { first_name, last_name, inc_book, out_book, time, date, status }
@@ -24,7 +25,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-// Get one Appointment by ID
+// // Get one Appointment by ID
 router.get('/:id', async (req, res) => {
     try {
     const appointment = await AppointmentModel.findById(req.params.id).populate([{path : 'inc_book'}, {path : 'out_book'}])
@@ -39,14 +40,35 @@ router.get('/:id', async (req, res) => {
 
 })
 
-// Get one Appointment by ID
-router.get('/pending', async (req, res) => {
+// Update status of book
+router.put('/:id', async (req, res) => {
+
+    const { first_name, last_name, inc_book, out_book, time, date, status } = req.body
+    const updatedAppointment = { first_name, last_name, inc_book, out_book, time, date, status }
+  
     try {
-    const appointment = await AppointmentModel.findById(req.params.id).populate([{path : 'inc_book'}, {path : 'out_book'}])
+      const appointment = await AppointmentModel.findByIdAndUpdate(req.params.id, updatedAppointment, { returnDocument: 'after' })
+      if (appointment) {
+        res.send(appointment)
+      } else {
+        res.status(404).send({ error: 'Appointment not found' })
+      }
+    }
+    catch (err) {
+      res.status(500).send({ error: err.message })
+    }
+  
+  })
+
+// Get All Appointments by status
+router.get('/status/pending', async (req, res) => {
+    try {
+    const appointment = await AppointmentModel.find({ status: 'Pending' }).populate([{path : 'inc_book'}, {path : 'out_book'}])
+    
     if (appointment) {
         res.send(appointment)
     } else {
-        res.status(404).send({ error: 'Appointment not found' })
+        res.status(404).send({ error: 'No Appointments found' })
     }}
     catch (err) {
         res.status(500).send ({ error : err.message })

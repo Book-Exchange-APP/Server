@@ -22,6 +22,26 @@ router.get('/:id',async (req, res) => {
         }
 })
 
+// Update status of book
+router.put('/:id', async (req, res) => {
+
+    const { title, author, condition, location, language, img, genre, description, status } = req.body
+    const updatedBook = { title, author, condition, location, language, img, genre, description, status }
+  
+    try {
+      const book = await BookModel.findByIdAndUpdate(req.params.id, updatedBook, { returnDocument: 'after' })
+      if (book) {
+        res.send(book)
+      } else {
+        res.status(404).send({ error: 'Book not found' })
+      }
+    }
+    catch (err) {
+      res.status(500).send({ error: err.message })
+    }
+  
+  })
+
 // Get Book by Title
 router.get('/title/:title',async (req, res) => {
     try {
@@ -67,10 +87,10 @@ router.get('/genre/:genre',async (req, res) => {
 // Create new Book
 router.post('/', async (req, res) => {
     try {
-    // Needs to be amended to accept incoming book details and book selected
+
     const { title, author, condition, location, language, img, genre, description } = req.body
-   
-    const newBook = { title, author, condition, location, language, img, genre, description }
+    let time_stamp = Date.now()
+    const newBook = { title, author, condition, location, language, img, genre, description, time_stamp }
 
     const insertedBook = await BookModel.create(newBook)
     res.status(201).send(insertedBook)

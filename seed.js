@@ -38,7 +38,8 @@ const books = [
         language: 'English',
         img: 'IMAGE',
         genre: 'Fantasy',
-        description: 'One ring to rule them all'
+        description: 'One ring to rule them all',
+        status: 'Available'
 
     },
     {
@@ -49,7 +50,8 @@ const books = [
         language: 'English',
         img: 'IMAGE',
         genre: 'Fantasy',
-        description: 'Winter is Coming'
+        description: 'Winter is Coming',
+        status: 'Available'
     },
     {
         title: 'Winnie the Pooh',
@@ -59,7 +61,8 @@ const books = [
         language: 'English',
         img: 'IMAGE',
         genre: 'Childrens',
-        description: "Somebody's eaten all the Honey"
+        description: "Somebody's eaten all the Honey",
+        status: 'Available'
     },
     {
         title: 'Matilda',
@@ -69,7 +72,8 @@ const books = [
         language: 'English',
         img: 'IMAGE',
         genre: 'Childrens',
-        description: "Matilda, Matilda she's really very small. But inside she's TALL"
+        description: "Matilda, Matilda she's really very small. But inside she's TALL",
+        status: 'Unavailable'
     },
     {
         title: 'BFG',
@@ -79,7 +83,8 @@ const books = [
         language: 'English',
         img: 'IMAGE',
         genre: 'Childrens',
-        description: "Big friendly giant befriending a child."
+        description: "Big friendly giant befriending a child.",
+        status: 'Available'
     },
     {
         title: 'War of the Worlds',
@@ -89,7 +94,8 @@ const books = [
         language: 'English',
         img: 'IMAGE',
         genre: 'Science Fiction',
-        description: "You're a wizard Harry"
+        description: "You're a wizard Harry",
+        status: 'Available'
     },
     {
         title: 'Dune',
@@ -99,7 +105,8 @@ const books = [
         language: 'English',
         img: 'IMAGE',
         genre: 'Science Fiction',
-        description: "You're a wizard Harry"
+        description: "You're a wizard Harry",
+        status: 'Available'
     },
     {
         title: 'Harry Potter and the Philosophers Stone',
@@ -109,7 +116,8 @@ const books = [
         language: 'English',
         img: 'IMAGE',
         genre: 'Fantasy',
-        description: "You're a wizard Harry"
+        description: "You're a wizard Harry",
+        status: 'Available'
     },
     {
         title: 'Harry Potter and the Chamber of Secrets',
@@ -119,7 +127,8 @@ const books = [
         language: 'English',
         img: 'IMAGE',
         genre: 'Fantasy',
-        description: "You're a wizard Harry"
+        description: "You're a wizard Harry",
+        status: 'Available'
     },
     {
         title: 'Harry Potter and the Prisoner of Azkaban',
@@ -129,7 +138,8 @@ const books = [
         language: 'English',
         img: 'IMAGE',
         genre: 'Fantasy',
-        description: "You're a wizard Harry"
+        description: "You're a wizard Harry",
+        status: 'Available'
     },
     {
         title: 'Harry Potter and the Goblet of Fire',
@@ -139,7 +149,8 @@ const books = [
         language: 'English',
         img: 'IMAGE',
         genre: 'Fantasy',
-        description: "You're a wizard Harry"
+        description: "You're a wizard Harry",
+        status: 'Available'
     },
     {
         title: 'Harry Potter and the Order of the Phoenix',
@@ -149,7 +160,8 @@ const books = [
         language: 'English',
         img: 'IMAGE',
         genre: 'Fantasy',
-        description: "You're a wizard Harry"
+        description: "You're a wizard Harry",
+        status: 'Available'
     },
     {
         title: 'Harry Potter and the Half-Blood Prince',
@@ -159,7 +171,8 @@ const books = [
         language: 'English',
         img: 'IMAGE',
         genre: 'Fantasy',
-        description: "You're a wizard Harry"
+        description: "You're a wizard Harry",
+        status: 'Available'
     },
     {
         title: 'Harry Potter and the Deathly Hallows',
@@ -169,7 +182,8 @@ const books = [
         language: 'English',
         img: 'IMAGE',
         genre: 'Fantasy',
-        description: "You're a wizard Harry"
+        description: "You're a wizard Harry",
+        status: 'Unavailable'
     },
     {
         title: 'Harry Potter and the Cursed Child',
@@ -179,7 +193,8 @@ const books = [
         language: 'English',
         img: 'IMAGE',
         genre: 'Fantasy',
-        description: "You're a wizard Harry"
+        description: "You're a wizard Harry",
+        status: 'Available'
     },
 ]
 
@@ -197,13 +212,22 @@ const appointments = [
         status: 'Pending'
     },
     {
+        first_name: 'Robin',
+        last_name: 'Williams',
+        inc_book: book[6],
+        out_book: book[8],
+        time: '15:30',
+        date: '02/25/2023',
+        status: 'Pending'
+    },
+    {
         first_name: 'Betty',
         last_name: 'White',
         inc_book: book[2],
         out_book: book[3],
         time: '18:00',
         date: '04/12/2023',
-        status: 'Pending'
+        status: 'Approved'
     }
 ]
 

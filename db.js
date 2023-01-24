@@ -35,7 +35,8 @@ const bookSchema = new mongoose.Schema({
     // Add list of set genres to choose from
     genre: { type: String, required: true },
     description: { type: String, required: true, maxLength: 100 },
-    time_stamp: { type: Number, required: true, default: now }
+    time_stamp: { type: Number, required: true, default: now },
+    status: { type: String, required: true, default: 'Pending'}
 })
 
 // Create book model based on schema
@@ -61,7 +62,7 @@ const AppointmentModel = mongoose.model('Appointment', appointmentSchema)
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     // Accespt email type
-    email: { type: String, required: true, match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'] },
+    email: { type: String, required: true, unique: true, match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'] },
     password: { type: String, required: true },
     status: { type: String, required: true, default: 'Admin' }
 })

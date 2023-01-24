@@ -3,10 +3,12 @@ import { UserModel } from '../db.js'
 
 const router = express.Router()
 
+// Gets all users
 router.get('/', async (req, res) => {
     res.send(await UserModel.find())
 })
 
+// Gets users by ID
 router.get('/:id',async (req, res) => {
     try {
         const user = await UserModel.findById(req.params.id)
@@ -20,14 +22,13 @@ router.get('/:id',async (req, res) => {
         }
 })
 
+// Create new user
 router.post('/', async (req, res) => {
     try {
-    // Create new user
-    // Destructure req object 
     const { name, email, password } = req.body
-    // Validate by creating new appointment object from values passed in.
+
     const newUser = { name, email, password }
-    // Push newAppointment to Database
+
     const insertedUser = await UserModel.create(newUser)
     res.status(201).send(insertedUser)
     }
