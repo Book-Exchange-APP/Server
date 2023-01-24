@@ -73,6 +73,42 @@ app.get("/", (req, res) => {
                     type : "GET",
                     action : "Retrieves all appointments that have a status 'Pending'",
                     returns : "Array of appointments"
+                },
+                {
+                    route :"/appointments",
+                    type : "POST",
+                    action : "Creates a new appointment",
+                    returns : "Created Appointment"
+                },
+                {
+                    route :"/appointments/:id",
+                    type : "PUT",
+                    action : "Update an appointment",
+                    returns : "Updated Appointment"
+                },
+                {
+                    route :"/locations",
+                    type : "GET",
+                    action : "Retrieves all locations",
+                    returns : "Array of Locations"
+                },
+                {
+                    route :"/users",
+                    type : "GET",
+                    action : "Retrieves all users",
+                    returns : "Array of Users"
+                },
+                {
+                    route :"/users",
+                    type : "POST",
+                    action : "Creates a new User",
+                    returns : "Created User"
+                },
+                {
+                    route :"/users/:id",
+                    type : "GET",
+                    action : "Retrieves single User with ID of input",
+                    returns : "Single User"
                 }
 
             ]
