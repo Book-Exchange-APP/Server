@@ -20,6 +20,7 @@ catch (err) {
 }
 
 let today = new Date().toISOString().slice(0, 10)
+let now = Date.now()
 
 // Define Book schema
 const bookSchema = new mongoose.Schema({
@@ -33,7 +34,8 @@ const bookSchema = new mongoose.Schema({
     img: { type: String, required: true },
     // Add list of set genres to choose from
     genre: { type: String, required: true },
-    description: { type: String, required: true, maxLength: 100 }
+    description: { type: String, required: true, maxLength: 100 },
+    time_stamp: { type: Number, required: true, default: now }
 })
 
 // Create book model based on schema
@@ -61,7 +63,7 @@ const userSchema = new mongoose.Schema({
     // Accespt email type
     email: { type: String, required: true, match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'] },
     password: { type: String, required: true },
-    status: { type: String, required: true }
+    status: { type: String, required: true, default: 'Admin' }
 })
 
 // Create User model based on schema

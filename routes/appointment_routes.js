@@ -3,10 +3,12 @@ import { AppointmentModel } from '../db.js'
 
 const router = express.Router()
 
+// Get all appointments
 router.get('/', async (req, res) => {
     res.send(await AppointmentModel.find().populate([{path : 'inc_book'}, {path : 'out_book'}]))
 })
 
+// Create new appointment 
 router.post('/', async (req, res) => {
     try {
     // Needs to be amended to accept incoming book details and book selected
@@ -22,7 +24,23 @@ router.post('/', async (req, res) => {
     }
 })
 
+// Get one Appointment by ID
 router.get('/:id', async (req, res) => {
+    try {
+    const appointment = await AppointmentModel.findById(req.params.id).populate([{path : 'inc_book'}, {path : 'out_book'}])
+    if (appointment) {
+        res.send(appointment)
+    } else {
+        res.status(404).send({ error: 'Appointment not found' })
+    }}
+    catch (err) {
+        res.status(500).send ({ error : err.message })
+    }
+
+})
+
+// Get one Appointment by ID
+router.get('/pending', async (req, res) => {
     try {
     const appointment = await AppointmentModel.findById(req.params.id).populate([{path : 'inc_book'}, {path : 'out_book'}])
     if (appointment) {

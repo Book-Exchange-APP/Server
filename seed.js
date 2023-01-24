@@ -39,6 +39,7 @@ const books = [
         img: 'IMAGE',
         genre: 'Fantasy',
         description: 'One ring to rule them all'
+
     },
     {
         title: 'Game of Thrones',
@@ -57,18 +58,128 @@ const books = [
         location: locs[0],
         language: 'English',
         img: 'IMAGE',
-        genre: 'Fantasy',
+        genre: 'Childrens',
         description: "Somebody's eaten all the Honey"
     },
     {
         title: 'Matilda',
-        author: 'Rohld Dahl',
+        author: 'Roald Dahl',
         condition: 'Good',
         location: locs[0],
         language: 'English',
         img: 'IMAGE',
-        genre: 'Fantasy',
+        genre: 'Childrens',
         description: "Matilda, Matilda she's really very small. But inside she's TALL"
+    },
+    {
+        title: 'BFG',
+        author: 'Roald Dahl',
+        condition: 'Poor',
+        location: locs[0],
+        language: 'English',
+        img: 'IMAGE',
+        genre: 'Childrens',
+        description: "Big friendly giant befriending a child."
+    },
+    {
+        title: 'War of the Worlds',
+        author: 'H.G. Wells',
+        condition: 'Poor',
+        location: locs[1],
+        language: 'English',
+        img: 'IMAGE',
+        genre: 'Science Fiction',
+        description: "You're a wizard Harry"
+    },
+    {
+        title: 'Dune',
+        author: 'Frank Herbert',
+        condition: 'Poor',
+        location: locs[1],
+        language: 'English',
+        img: 'IMAGE',
+        genre: 'Science Fiction',
+        description: "You're a wizard Harry"
+    },
+    {
+        title: 'Harry Potter and the Philosophers Stone',
+        author: 'J.K. Rowling',
+        condition: 'Poor',
+        location: locs[1],
+        language: 'English',
+        img: 'IMAGE',
+        genre: 'Fantasy',
+        description: "You're a wizard Harry"
+    },
+    {
+        title: 'Harry Potter and the Chamber of Secrets',
+        author: 'J.K. Rowling',
+        condition: 'Good',
+        location: locs[1],
+        language: 'English',
+        img: 'IMAGE',
+        genre: 'Fantasy',
+        description: "You're a wizard Harry"
+    },
+    {
+        title: 'Harry Potter and the Prisoner of Azkaban',
+        author: 'J.K. Rowling',
+        condition: 'Excellent',
+        location: locs[1],
+        language: 'English',
+        img: 'IMAGE',
+        genre: 'Fantasy',
+        description: "You're a wizard Harry"
+    },
+    {
+        title: 'Harry Potter and the Goblet of Fire',
+        author: 'J.K. Rowling',
+        condition: 'Poor',
+        location: locs[2],
+        language: 'English',
+        img: 'IMAGE',
+        genre: 'Fantasy',
+        description: "You're a wizard Harry"
+    },
+    {
+        title: 'Harry Potter and the Order of the Phoenix',
+        author: 'J.K. Rowling',
+        condition: 'Excellent',
+        location: locs[1],
+        language: 'English',
+        img: 'IMAGE',
+        genre: 'Fantasy',
+        description: "You're a wizard Harry"
+    },
+    {
+        title: 'Harry Potter and the Half-Blood Prince',
+        author: 'J.K. Rowling',
+        condition: 'Poor',
+        location: locs[0],
+        language: 'English',
+        img: 'IMAGE',
+        genre: 'Fantasy',
+        description: "You're a wizard Harry"
+    },
+    {
+        title: 'Harry Potter and the Deathly Hallows',
+        author: 'J.K. Rowling',
+        condition: 'Poor',
+        location: locs[1],
+        language: 'English',
+        img: 'IMAGE',
+        genre: 'Fantasy',
+        description: "You're a wizard Harry"
+    },
+    {
+        title: 'Harry Potter and the Cursed Child',
+        author: 'J.K. Rowling',
+        condition: 'Poor',
+        location: locs[2],
+        language: 'English',
+        img: 'IMAGE',
+        genre: 'Fantasy',
+        description: "You're a wizard Harry"
     },
 ]
 
@@ -81,7 +192,7 @@ const appointments = [
         last_name: 'Cruise',
         inc_book: book[0],
         out_book: book[1],
-        time: '1300',
+        time: '13:00',
         date: '12/2/2023',
         status: 'Pending'
     },
@@ -90,8 +201,8 @@ const appointments = [
         last_name: 'White',
         inc_book: book[2],
         out_book: book[3],
-        time: '1300',
-        date: '04/12/2022',
+        time: '18:00',
+        date: '04/12/2023',
         status: 'Pending'
     }
 ]
