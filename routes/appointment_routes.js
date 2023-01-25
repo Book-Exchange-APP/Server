@@ -1,5 +1,6 @@
 import express from "express"
 import { AppointmentModel, BookModel } from "../db.js"
+import { routeGuard } from "../middleware/authMiddleware.js"
 
 const router = express.Router()
 

@@ -1,6 +1,6 @@
 import express from "express"
 import { BookModel } from "../db.js"
-import { routeGuard } from "../middleware/authMiddleware.js"
+
 
 const router = express.Router()
 
@@ -10,7 +10,7 @@ const router = express.Router()
 // action : "Retrieves all Books ordered by Latest arrival",
 // returns : "Array of books"
 
-router.get("/", routeGuard, async (req, res) => {
+router.get("/", async (req, res) => {
     res.send(await BookModel.find().sort({time_stamp: -1}).populate({ path: "location"}))
 })
 
@@ -19,6 +19,7 @@ router.get("/", routeGuard, async (req, res) => {
 // type : "GET",
 // action : "Retrieves single book from ID input",
 // returns : "Single book"
+
 router.get("/:id",async (req, res) => {
     try {
         const book = await BookModel.findById(req.params.id).populate({ path: "location"})
