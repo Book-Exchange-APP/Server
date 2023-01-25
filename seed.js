@@ -262,7 +262,7 @@ console.log("Inserted languages")
 const conditions = [
     { name: "Poor" },
     { name: "Good" },
-    { name: "Exceleent" }
+    { name: "Excellent" }
 ]
 
 await ConditionModel.insertMany(conditions)
