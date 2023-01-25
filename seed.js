@@ -238,7 +238,7 @@ const users = [
     {
         name: "Mary Smith",
         email: "mary@bookstore.com",
-        password: "admin",
+        hashedPassword: "admin",
         status: "admin"
     }
 ]

@@ -64,7 +64,7 @@ const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     // Accespt email type
     email: { type: String, required: true, unique: true, match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "Please fill a valid email address"] },
-    password: { type: String, required: true },
+    hashedPassword: { type: String, required: true },
     status: { type: String, required: true, default: "Admin" }
 })
 
