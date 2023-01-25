@@ -11,7 +11,7 @@ const router = express.Router()
 // returns : "Array of books"
 
 router.get("/", async (req, res) => {
-    res.send(await BookModel.find().sort({time_stamp: -1}).populate({ path: "location"}))
+    res.send(await BookModel.find({$or:[{status: "Pending"}, {status: "Available"}]}).sort({status: 1, time_stamp: -1}).populate({path: "location"}))
 })
 
 // Get book by ID

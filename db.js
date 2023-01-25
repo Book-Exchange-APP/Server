@@ -82,4 +82,29 @@ const locationSchema = new mongoose.Schema({
 // Create location model based on schema
 const LocationModel = mongoose.model("Location", locationSchema)
 
-export { AppointmentModel, BookModel, UserModel, LocationModel, dbClose }
+// Define Language schema
+const languageSchema = new mongoose.Schema({
+    name: { type: String, required: true }
+})
+
+// Create language model based on schema
+const LanguageModel = mongoose.model("Language", languageSchema)
+
+// Define Condition schema
+const conditionSchema = new mongoose.Schema({
+    name: { type: String, required: true }
+})
+
+// Create condition model based on schema
+const ConditionModel = mongoose.model("Condition", conditionSchema)
+
+// Define Genre schema
+const genreSchema = new mongoose.Schema({
+    name: { type: String, required: true }
+})
+
+// Create genre model based on schema
+const GenreModel = mongoose.model("Genre", genreSchema)
+
+
+export { AppointmentModel, BookModel, UserModel, LocationModel, LanguageModel, ConditionModel, GenreModel, dbClose }
