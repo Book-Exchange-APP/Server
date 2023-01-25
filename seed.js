@@ -1,9 +1,12 @@
-import { AppointmentModel, BookModel, LocationModel, UserModel, dbClose} from "./db.js"
+import { AppointmentModel, BookModel, LocationModel, UserModel, LanguageModel, ConditionModel, GenreModel, dbClose} from "./db.js"
 
 await BookModel.deleteMany()
 await LocationModel.deleteMany()
 await AppointmentModel.deleteMany()
 await UserModel.deleteMany()
+await LanguageModel.deleteMany()
+await ConditionModel.deleteMany()
+await GenreModel.deleteMany()
 
 const locations = [
     {   
@@ -51,7 +54,7 @@ const books = [
         img: "IMAGE",
         genre: "Fantasy",
         description: "Winter is Coming",
-        status: "Available"
+        status: "Pending"
     },
     {
         title: "Winnie the Pooh",
@@ -168,7 +171,7 @@ const books = [
         author: "J.K. Rowling",
         condition: "Poor",
         location: locs[0],
-        language: "English",
+        language: "French",
         img: "IMAGE",
         genre: "Fantasy",
         description: "You're a wizard Harry",
@@ -179,7 +182,7 @@ const books = [
         author: "J.K. Rowling",
         condition: "Poor",
         location: locs[1],
-        language: "English",
+        language: "Korean",
         img: "IMAGE",
         genre: "Fantasy",
         description: "You're a wizard Harry",
@@ -190,7 +193,7 @@ const books = [
         author: "J.K. Rowling",
         condition: "Poor",
         location: locs[2],
-        language: "English",
+        language: "Chinese",
         img: "IMAGE",
         genre: "Fantasy",
         description: "You're a wizard Harry",
@@ -245,6 +248,34 @@ const users = [
 
 await UserModel.insertMany(users)
 console.log("Inserted users")
+
+const languages = [
+    { name: "English" },
+    { name: "Chinese" },
+    { name: "Korean" },
+    { name: "French" }
+]
+
+await LanguageModel.insertMany(languages)
+console.log("Inserted languages")
+
+const conditions = [
+    { name: "Poor" },
+    { name: "Good" },
+    { name: "Exceleent" }
+]
+
+await ConditionModel.insertMany(conditions)
+console.log("Inserted conditions")
+
+const genres = [
+    { name: "Fantasy" },
+    { name: "Children" },
+    { name: "Science Fiction" }
+]
+
+await GenreModel.insertMany(genres)
+console.log("Inserted genres")
 
 
 dbClose()
