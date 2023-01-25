@@ -1,5 +1,6 @@
 import express from "express"
 import { BookModel } from "../db.js"
+import { routeGuard } from "../middleware/authMiddleware.js"
 
 const router = express.Router()
 
@@ -18,6 +19,7 @@ router.get("/", async (req, res) => {
 // type : "GET",
 // action : "Retrieves single book from ID input",
 // returns : "Single book"
+
 router.get("/:id",async (req, res) => {
     try {
         const book = await BookModel.findById(req.params.id).populate({ path: "location"})
@@ -36,7 +38,9 @@ router.get("/:id",async (req, res) => {
 // type : "PUT",
 // action : "Updates new book in database",
 // returns : "Updated book"
-router.put("/:id", async (req, res) => {
+
+router.put("/:id", routeGuard, async (req, res) => {
+    if (req.user.status === "Admin") {
 
     const { title, author, condition, location, language, img, genre, description, status } = req.body
     const updatedBook = { title, author, condition, location, language, img, genre, description, status }
@@ -51,9 +55,10 @@ router.put("/:id", async (req, res) => {
     }
     catch (err) {
       res.status(500).send({ error: err.message })
+    }} else {
+        res.status(401).send({ error: "Unauthorised Access" })
     }
-  
-  })
+})
 
 // Get Book by Title
 // route :"/books/title/:title",
