@@ -66,21 +66,24 @@ router.get("/:id", async (req, res) => {
 // action : "Update an appointment",
 // returns : "Updated Appointment"
 
-router.put("/:id", async (req, res) => {
-
-    const { first_name, last_name, inc_book, out_book, time, date, status } = req.body
-    const updatedAppointment = { first_name, last_name, inc_book, out_book, time, date, status }
-  
-    try {
-      const appointment = await AppointmentModel.findByIdAndUpdate(req.params.id, updatedAppointment, { returnDocument: "after" })
-      if (appointment) {
-        res.send(appointment)
-      } else {
-        res.status(404).send({ error: "Appointment not found" })
-      }
-    }
-    catch (err) {
-      res.status(500).send({ error: err.message })
+router.put("/:id", routeGuard, async (req, res) => {
+    if (req.user.status === "Admin") {
+    
+        const { first_name, last_name, inc_book, out_book, time, date, status } = req.body
+        const updatedAppointment = { first_name, last_name, inc_book, out_book, time, date, status }
+    
+        try {
+        const appointment = await AppointmentModel.findByIdAndUpdate(req.params.id, updatedAppointment, { returnDocument: "after" })
+        if (appointment) {
+            res.send(appointment)
+        } else {
+            res.status(404).send({ error: "Appointment not found" })
+        }
+        }
+        catch (err) {
+        res.status(500).send({ error: err.message })
+    }} else {
+        res.status(401).send({ error: "Unauthorised Access" })
     }
   
   })
@@ -91,17 +94,20 @@ router.put("/:id", async (req, res) => {
 // action : "Retrieves all appointments that have a status 'Pending'",
 // returns : "Array of appointments"
 
-router.get("/status/pending", async (req, res) => {
-    try {
-    const appointment = await AppointmentModel.find({ status: "Pending" }).populate([{path : "inc_book"}, {path : "out_book"}])
-    
-    if (appointment) {
-        res.send(appointment)
-    } else {
-        res.status(404).send({ error: "No Appointments found" })
-    }}
-    catch (err) {
-        res.status(500).send ({ error : err.message })
+router.get("/status/pending", routeGuard, async (req, res) => {
+    if (req.user.status === "Admin") {
+        try {
+        const appointment = await AppointmentModel.find({ status: "Pending" }).populate([{path : "inc_book"}, {path : "out_book"}])
+        
+        if (appointment) {
+            res.send(appointment)
+        } else {
+            res.status(404).send({ error: "No Appointments found" })
+        }}
+        catch (err) {
+            res.status(500).send ({ error : err.message })
+    }} else {
+        res.status(401).send({ error: "Unauthorised Access" })
     }
 
 })

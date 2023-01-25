@@ -117,6 +117,7 @@ router.post("/login", async (req, res) => {
 router.get("/me", routeGuard, async (req,res) => {
     try {
         const {_id, name, email } = await UserModel.findById(req.user.id)
+        console.log(req.user.status)
         res.send({
             id: _id,
             name,
