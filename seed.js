@@ -17,19 +17,22 @@ const locations = [
         location: "Brisbane City", 
         address: "5 Queen st, Brisbane City",
         postcode: 4000,
-        phone: 12345678
+        phone: '0712341234',
+        email: 'location1@bx.com'
     },
     {
         location: "South Brisbane",
         address: "10 Watson st, Acacia Ridge",
         postcode: 4110,
-        phone: 24681012
+        phone: '0743214321',
+        email: 'location2@bx.com'
     },
     {
         location: "North Brisbane",
         address: "22 Rainbow st, Sandgate",
         postcode: 4017,
-        phone: 135791113
+        phone: '1357911132',
+        email: 'location3@bx.com'
     }
 ]
 
@@ -266,7 +269,7 @@ console.log("Inserted languages")
 const conditions = [
     { name: "Poor" },
     { name: "Good" },
-    { name: "Exceleent" }
+    { name: "Excellent" }
 ]
 
 await ConditionModel.insertMany(conditions)
