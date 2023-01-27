@@ -1,4 +1,5 @@
 import { AppointmentModel, BookModel, LocationModel, UserModel, LanguageModel, ConditionModel, GenreModel, dbClose} from "./db.js"
+import bcrypt from 'bcryptjs'
 
 await BookModel.deleteMany()
 await LocationModel.deleteMany()
@@ -7,6 +8,9 @@ await UserModel.deleteMany()
 await LanguageModel.deleteMany()
 await ConditionModel.deleteMany()
 await GenreModel.deleteMany()
+
+const salt = await bcrypt.genSalt(10)
+const hashedPassword = await bcrypt.hash('admin', salt)
 
 const locations = [
     {   
@@ -240,9 +244,9 @@ console.log("Inserted appointments")
 const users = [
     {
         name: "Mary Smith",
-        email: "mary@bookstore.com",
-        password: "admin",
-        status: "admin"
+        email: "admin@bookstore.com",
+        password: hashedPassword,
+        admin: true
     }
 ]
 

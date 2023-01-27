@@ -65,7 +65,7 @@ const userSchema = new mongoose.Schema({
     // Accespt email type
     email: { type: String, required: true, unique: true, match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "Please fill a valid email address"] },
     password: { type: String, required: true },
-    status: { type: String, required: true, default: 'Public' }
+    admin: { type: Boolean, required: true, default: false }
 })
 
 // Create User model based on schema

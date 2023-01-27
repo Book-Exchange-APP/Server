@@ -68,7 +68,8 @@ router.post("/", async (req, res) => {
                 _id: newUser._id,
                 name: newUser.name,
                 email: newUser.email,
-                token: createToken(newUser._id)
+                token: createToken(newUser._id),
+                admin: newUser.admin
              })
         }
         }
@@ -95,7 +96,8 @@ router.post("/login", async (req, res) => {
                 _id: user._id,
                 name: user.name,
                 email: user.email,
-                token: createToken(user._id)
+                token: createToken(user._id),
+                admin: user.admin
              })
         } else {
             res.status(400)
