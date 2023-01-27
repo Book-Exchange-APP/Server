@@ -76,7 +76,8 @@ const locationSchema = new mongoose.Schema({
     location: { type: String, required: true }, 
     address: { type: String, required: true },
     postcode: { type: Number, required: true },
-    phone: { type: Number, required: true }
+    phone: { type: String, required: true },
+    email: { type: String }
 })
 
 // Create location model based on schema
