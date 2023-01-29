@@ -11,7 +11,12 @@ const router = express.Router()
 // returns : "Array of books"
 
 router.get("/", async (req, res) => {
-    res.send(await BookModel.find({$or:[{status: "Pending"}, {status: "Available"}]}).sort({status: 1, time_stamp: -1}).populate({path: "location"}))
+    res.send(await BookModel.find().sort({status: 1, time_stamp: -1}).
+    populate({path: "condition", select: "name"}).
+    populate({path: "language", select: "name"}).
+    populate({path: "location", select: "-__v"}).
+    populate({path: "status", select: "name"}).
+    populate({path: "genre", select: "name"}))
 })
 
 // Get book by ID
@@ -22,7 +27,13 @@ router.get("/", async (req, res) => {
 
 router.get("/:id",async (req, res) => {
     try {
-        const book = await BookModel.findById(req.params.id).populate({ path: "location"})
+        const book = await BookModel.findById(req.params.id).
+        populate({path: "condition", select: "name"}).
+        populate({path: "language", select: "name"}).
+        populate({path: "location", select: "-__v"}).
+        populate({path: "status", select: "name"}).
+        populate({path: "genre", select: "name"})
+
         if (book) {
             res.send(book)
         } else {
@@ -55,7 +66,8 @@ router.put("/:id", routeGuard, async (req, res) => {
     }
     catch (err) {
       res.status(500).send({ error: err.message })
-    }} else {
+    }
+    } else {
         res.status(401).send({ error: "Unauthorised Access" })
     }
 })
@@ -68,7 +80,13 @@ router.put("/:id", routeGuard, async (req, res) => {
 
 router.get("/title/:title",async (req, res) => {
     try {
-        const book = await BookModel.findOne({ title: req.params.title }).populate({ path: "location"})
+        const book = await BookModel.findOne({ title: req.params.title }).
+        populate({path: "condition", select: "name"}).
+        populate({path: "language", select: "name"}).
+        populate({path: "location", select: "-__v"}).
+        populate({path: "status", select: "name"}).
+        populate({path: "genre", select: "name"})
+
         if (book) {
             res.send(book)
         } else {
@@ -87,7 +105,13 @@ router.get("/title/:title",async (req, res) => {
 
 router.get("/author/:author",async (req, res) => {
     try {
-        const book = await BookModel.find({ author: req.params.author }).populate({ path: "location"})
+        const book = await BookModel.find({ author: req.params.author }).
+        populate({path: "condition", select: "name"}).
+        populate({path: "language", select: "name"}).
+        populate({path: "location", select: "-__v"}).
+        populate({path: "status", select: "name"}).
+        populate({path: "genre", select: "name"})
+
         if (book) {
             res.send(book)
         } else {
@@ -106,7 +130,13 @@ router.get("/author/:author",async (req, res) => {
 
 router.get("/genre/:genre",async (req, res) => {
     try {
-        const book = await BookModel.find({ genre: req.params.genre }).populate({ path: "location"})
+        const book = await BookModel.find({ genre: req.params.genre }).
+        populate({path: "condition", select: "name"}).
+        populate({path: "language", select: "name"}).
+        populate({path: "location", select: "-__v"}).
+        populate({path: "status", select: "name"}).
+        populate({path: "genre", select: "name"})
+        
         if (book) {
             res.send(book)
         } else {

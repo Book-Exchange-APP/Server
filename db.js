@@ -28,16 +28,16 @@ const bookSchema = new mongoose.Schema({
     title: { type: String, required: true, maxLength: 50 },
     author: { type: String, required: true, maxLength: 50 },
     // Add list of set conditions to choose from oneOf?
-    condition: { type: String, required: true },
+    condition: { type: mongoose.ObjectId, ref: "Condition", required: true },
     location: { type: mongoose.ObjectId, ref: "Location", required: true },
-    language: { type: String, required: true },
+    language: { type: mongoose.ObjectId, ref: "Language", required: true },
     // change to accept .png files
     img: { type: String, required: true },
     // Add list of set genres to choose from oneOf?
-    genre: { type: String, required: true },
+    genre: { type: mongoose.ObjectId, ref: "Genre", required: true },
     description: { type: String, required: true, maxLength: 100 },
     time_stamp: { type: Number, required: true, default: now },
-    status: { type: String, required: true, default: "Pending"}
+    status: { type: mongoose.ObjectId, ref: "BookStatus", required: true },
 })
 
 // Create book model based on schema
@@ -53,7 +53,8 @@ const appointmentSchema = new mongoose.Schema({
     time: { type: String, required: true, match: /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/ },
     // 
     date: { type: Date, required: true, min : today, match: /^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/ },
-    status: { type: String, required: true }
+    status: { type: mongoose.ObjectId, ref: "AppointmentStatus", required: true },
+    location: { type: mongoose.ObjectId, ref: "Location", required: true },
 })
 
 // Create appointment model based on schema
@@ -107,5 +108,14 @@ const genreSchema = new mongoose.Schema({
 // Create genre model based on schema
 const GenreModel = mongoose.model("Genre", genreSchema)
 
+// Define Status schema
+const statusSchema = new mongoose.Schema({
+    name: { type: String, required: true }
+})
 
-export { AppointmentModel, BookModel, UserModel, LocationModel, LanguageModel, ConditionModel, GenreModel, dbClose }
+// Create status based on schema
+const BookStatusModel = mongoose.model("BookStatus", statusSchema)
+const AppointmentStatusModel = mongoose.model("AppointmentStatus", statusSchema)
+
+
+export { AppointmentModel, BookModel, UserModel, LocationModel, LanguageModel, ConditionModel, GenreModel, BookStatusModel, AppointmentStatusModel, dbClose }

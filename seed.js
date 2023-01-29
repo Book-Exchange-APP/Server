@@ -1,4 +1,4 @@
-import { AppointmentModel, BookModel, LocationModel, UserModel, LanguageModel, ConditionModel, GenreModel, dbClose} from "./db.js"
+import { AppointmentModel, BookModel, LocationModel, UserModel, LanguageModel, ConditionModel, GenreModel, BookStatusModel, AppointmentStatusModel, dbClose} from "./db.js"
 import bcrypt from 'bcryptjs'
 
 await BookModel.deleteMany()
@@ -8,9 +8,60 @@ await UserModel.deleteMany()
 await LanguageModel.deleteMany()
 await ConditionModel.deleteMany()
 await GenreModel.deleteMany()
+await BookStatusModel.deleteMany()
+await AppointmentStatusModel.deleteMany()
 
 const salt = await bcrypt.genSalt(10)
 const hashedPassword = await bcrypt.hash('admin', salt)
+
+
+const languages = [
+    { name: "English" },
+    { name: "Chinese" },
+    { name: "Korean" },
+    { name: "French" }
+]
+
+const lans = await LanguageModel.insertMany(languages)
+console.log("Inserted languages")
+
+const conditions = [
+    { name: "Poor" },
+    { name: "Good" },
+    { name: "Excellent" }
+]
+
+const cons = await ConditionModel.insertMany(conditions)
+console.log("Inserted conditions")
+
+const genres = [
+    { name: "Fantasy" },
+    { name: "Children" },
+    { name: "Science Fiction" }
+]
+
+const gens = await GenreModel.insertMany(genres)
+console.log("Inserted genres")
+
+const bookStatus = [
+    { name: "Available" },
+    { name: "Unavailable" },
+    { name: "Pending" },
+]
+
+const bss = await BookStatusModel.insertMany(bookStatus)
+console.log("Inserted book status")
+
+
+const appointmentStatus = [
+    { name: "Pending" },
+    { name: "Approved" }
+]
+
+const ass = await AppointmentStatusModel.insertMany(appointmentStatus)
+console.log("Inserted appointment status")
+
+
 
 const locations = [
     {   
@@ -43,168 +94,168 @@ const books = [
     {
         title: "Lord Of The Rings",
         author: "J. R. R. Tolkien",
-        condition: "Good",
+        condition: cons[1],
         location: locs[1],
-        language: "English",
+        language: lans[0],
         img: "IMAGE",
-        genre: "Fantasy",
+        genre: gens[0],
         description: "One ring to rule them all",
-        status: "Available"
+        status: bss[0]
 
     },
     {
         title: "Game of Thrones",
         author: "George R. R. Martin",
-        condition: "Good",
-        location: locs[2],
-        language: "English",
+        condition: cons[1],
+        location: locs[1],
+        language: lans[0],
         img: "IMAGE",
-        genre: "Fantasy",
+        genre: gens[0],
         description: "Winter is Coming",
-        status: "Pending"
+        status: bss[2]
     },
     {
         title: "Winnie the Pooh",
         author: "A. A. Milne",
-        condition: "Good",
+        condition: cons[1],
         location: locs[0],
-        language: "English",
+        language: lans[0],
         img: "IMAGE",
-        genre: "Childrens",
+        genre: gens[1],
         description: "Somebody's eaten all the Honey",
-        status: "Available"
+        status: bss[0]
     },
     {
         title: "Matilda",
         author: "Roald Dahl",
-        condition: "Good",
+        condition: cons[1],
         location: locs[0],
-        language: "English",
+        language: lans[0],
         img: "IMAGE",
-        genre: "Childrens",
+        genre: gens[1],
         description: "Matilda, Matilda she's really very small. But inside she's TALL",
-        status: "Unavailable"
+        status: bss[2]
     },
     {
         title: "BFG",
         author: "Roald Dahl",
-        condition: "Poor",
+        condition: cons[0],
         location: locs[0],
-        language: "English",
+        language: lans[0],
         img: "IMAGE",
-        genre: "Childrens",
+        genre: gens[1],
         description: "Big friendly giant befriending a child.",
-        status: "Available"
+        status: bss[0]
     },
     {
         title: "War of the Worlds",
         author: "H.G. Wells",
-        condition: "Poor",
+        condition: cons[0],
         location: locs[1],
-        language: "English",
+        language: lans[0],
         img: "IMAGE",
-        genre: "Science Fiction",
+        genre: gens[2],
         description: "You're a wizard Harry",
-        status: "Available"
+        status: bss[0]
     },
     {
         title: "Dune",
         author: "Frank Herbert",
-        condition: "Poor",
+        condition: cons[0],
         location: locs[1],
-        language: "English",
+        language: lans[0],
         img: "IMAGE",
-        genre: "Science Fiction",
+        genre: gens[2],
         description: "You're a wizard Harry",
-        status: "Available"
+        status: bss[0]
     },
     {
         title: "Harry Potter and the Philosophers Stone",
         author: "J.K. Rowling",
-        condition: "Poor",
+        condition: cons[0],
         location: locs[1],
-        language: "English",
+        language: lans[0],
         img: "IMAGE",
-        genre: "Fantasy",
+        genre: gens[0],
         description: "You're a wizard Harry",
-        status: "Available"
+        status: bss[0]
     },
     {
         title: "Harry Potter and the Chamber of Secrets",
         author: "J.K. Rowling",
-        condition: "Good",
+        condition: cons[1],
         location: locs[1],
-        language: "English",
+        language: lans[0],
         img: "IMAGE",
-        genre: "Fantasy",
+        genre: gens[0],
         description: "You're a wizard Harry",
-        status: "Available"
+        status: bss[2]
     },
     {
         title: "Harry Potter and the Prisoner of Azkaban",
         author: "J.K. Rowling",
-        condition: "Excellent",
+        condition: cons[2],
         location: locs[1],
-        language: "English",
+        language: lans[0],
         img: "IMAGE",
-        genre: "Fantasy",
+        genre: gens[0],
         description: "You're a wizard Harry",
-        status: "Available"
+        status: bss[0]
     },
     {
         title: "Harry Potter and the Goblet of Fire",
         author: "J.K. Rowling",
-        condition: "Poor",
+        condition: cons[0],
         location: locs[2],
-        language: "English",
+        language: lans[0],
         img: "IMAGE",
-        genre: "Fantasy",
+        genre: gens[0],
         description: "You're a wizard Harry",
-        status: "Available"
+        status: bss[0]
     },
     {
         title: "Harry Potter and the Order of the Phoenix",
         author: "J.K. Rowling",
-        condition: "Excellent",
+        condition: cons[2],
         location: locs[1],
-        language: "English",
+        language: lans[0],
         img: "IMAGE",
-        genre: "Fantasy",
+        genre: gens[0],
         description: "You're a wizard Harry",
-        status: "Available"
+        status: bss[0]
     },
     {
         title: "Harry Potter and the Half-Blood Prince",
         author: "J.K. Rowling",
-        condition: "Poor",
+        condition: cons[0],
         location: locs[0],
-        language: "French",
+        language: lans[3],
         img: "IMAGE",
-        genre: "Fantasy",
+        genre: gens[0],
         description: "You're a wizard Harry",
-        status: "Available"
+        status: bss[0]
     },
     {
         title: "Harry Potter and the Deathly Hallows",
         author: "J.K. Rowling",
-        condition: "Poor",
+        condition: cons[0],
         location: locs[1],
-        language: "Korean",
+        language: lans[2],
         img: "IMAGE",
-        genre: "Fantasy",
+        genre: gens[0],
         description: "You're a wizard Harry",
-        status: "Unavailable"
+        status: bss[1]
     },
     {
         title: "Harry Potter and the Cursed Child",
         author: "J.K. Rowling",
-        condition: "Poor",
+        condition: cons[0],
         location: locs[2],
-        language: "Chinese",
+        language: lans[1],
         img: "IMAGE",
-        genre: "Fantasy",
+        genre: gens[0],
         description: "You're a wizard Harry",
-        status: "Available"
+        status: bss[0]
     },
 ]
 
@@ -219,7 +270,8 @@ const appointments = [
         out_book: book[1],
         time: "13:00",
         date: "12/2/2023",
-        status: "Pending"
+        status: ass[0], 
+        location: locs[1]
     },
     {
         first_name: "Robin",
@@ -228,7 +280,8 @@ const appointments = [
         out_book: book[8],
         time: "15:30",
         date: "02/25/2023",
-        status: "Pending"
+        status: ass[0],
+        location: locs[1]
     },
     {
         first_name: "Betty",
@@ -237,7 +290,8 @@ const appointments = [
         out_book: book[3],
         time: "18:00",
         date: "04/12/2023",
-        status: "Approved"
+        status: ass[1],
+        location: locs[0]
     }
 ]
 
@@ -255,34 +309,6 @@ const users = [
 
 await UserModel.insertMany(users)
 console.log("Inserted users")
-
-const languages = [
-    { name: "English" },
-    { name: "Chinese" },
-    { name: "Korean" },
-    { name: "French" }
-]
-
-await LanguageModel.insertMany(languages)
-console.log("Inserted languages")
-
-const conditions = [
-    { name: "Poor" },
-    { name: "Good" },
-    { name: "Excellent" }
-]
-
-await ConditionModel.insertMany(conditions)
-console.log("Inserted conditions")
-
-const genres = [
-    { name: "Fantasy" },
-    { name: "Children" },
-    { name: "Science Fiction" }
-]
-
-await GenreModel.insertMany(genres)
-console.log("Inserted genres")
 
 
 dbClose()
