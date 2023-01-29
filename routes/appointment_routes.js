@@ -11,7 +11,7 @@ const router = express.Router()
 // returns : "Array of appointments"
 
 router.get("/", async (req, res) => {
-    res.send(await AppointmentModel.find().populate([{path : "inc_book"}, {path : "out_book"}]))
+    res.send(await AppointmentModel.find().populate([{path : "inc_book"}, {path : "out_book"}, {path: 'status'}, {path: 'location'}]))
 })
 
 // Create new appointment 
@@ -48,7 +48,7 @@ router.post("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
     try {
-    const appointment = await AppointmentModel.findById(req.params.id).populate([{path : "inc_book"}, {path : "out_book"}])
+    const appointment = await AppointmentModel.findById(req.params.id).populate([{path : "inc_book"}, {path : "out_book"}, {path: 'status'}, {path: 'location'}])
     if (appointment) {
         res.send(appointment)
     } else {
