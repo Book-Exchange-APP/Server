@@ -6,6 +6,7 @@ import userRoutes from "./routes/user_routes.js"
 import languageRoutes from "./routes/language_routes.js"
 import conditionRoutes from "./routes/condition_routes.js"
 import genreRoutes from "./routes/genre_routes.js"
+import statusRoutes from "./routes/status_routes.js"
 import cors from "cors"
 
 const app = express()
@@ -33,5 +34,7 @@ app.use("/languages", languageRoutes)
 app.use("/conditions", conditionRoutes)
 
 app.use("/genres", genreRoutes)
+
+app.use("/status", statusRoutes)
 
 export default app
