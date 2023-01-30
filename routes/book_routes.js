@@ -1,5 +1,5 @@
 import express from "express"
-import { BookModel } from "../db.js"
+import { BookModel, BookStatusModel } from "../db.js"
 import { routeGuard } from "../middleware/authMiddleware.js"
 
 const router = express.Router()
@@ -51,7 +51,7 @@ router.get("/:id",async (req, res) => {
 // returns : "Updated book"
 
 router.put("/:id", routeGuard, async (req, res) => {
-    if (req.user.admin === "Admin") {
+    if (req.user.admin) {
 
     const { title, author, condition, location, language, img, genre, description, status } = req.body
     const updatedBook = { title, author, condition, location, language, img, genre, description, status }
@@ -157,7 +157,11 @@ router.post("/", async (req, res) => {
 
     const { title, author, condition, location, language, img, genre, description } = req.body
     let time_stamp = Date.now()
-    const newBook = { title, author, condition, location, language, img, genre, description, time_stamp }
+
+    const bookStatus = await BookStatusModel.findOne({name: "Pending"})
+    let status = bookStatus._id.toString()
+
+    const newBook = { title, author, condition, location, language, img, genre, description, time_stamp, status }
 
     const insertedBook = await BookModel.create(newBook)
     res.status(201).send(insertedBook)
