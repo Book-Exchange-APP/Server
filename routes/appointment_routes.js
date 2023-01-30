@@ -1,5 +1,5 @@
 import express from "express"
-import { AppointmentModel, BookModel } from "../db.js"
+import { AppointmentModel, BookModel, BookStatusModel, AppointmentStatusModel } from "../db.js"
 import { routeGuard } from "../middleware/authMiddleware.js"
 
 const router = express.Router()
@@ -22,17 +22,22 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-    let { first_name, last_name, inc_book, out_book, time, date, status } = req.body
+    let { first_name, last_name, inc_book, out_book, time, date, location} = req.body
     // Take incoming book details and create new Book in db
-    const { title, author, condition, location, language, img, genre, description } = req.body.inc_book
+    const { title, author, condition, language, img, genre, description} = req.body.inc_book
     let time_stamp = Date.now()
-    const newBook = { title, author, condition, location, language, img, genre, description, time_stamp }
+    const bookStatus = await BookStatusModel.findOne({name: "Pending"})
+    let status = bookStatus._id.toString()
+    const newBook = { title, author, condition, location, language, img, genre, description, time_stamp, status}
     const insertedBook = await BookModel.create(newBook)
+
     // Store inc_book id into variable to create appointment
     inc_book = insertedBook._id
-    const newAppointment = { first_name, last_name, inc_book , out_book, time, date, status }
+    const appointmentStatus = await AppointmentStatusModel.findOne({name: "Pending"})
+    status = appointmentStatus._id.toString()
+    const newAppointment = { first_name, last_name, inc_book, out_book, time, date, location, status }
 
-    const insertedAppointment = await AppointmentModel.create(newAppointment)
+    const insertedAppointment = await (await AppointmentModel.create(newAppointment)).populate([{path: "location", select: "location"}, {path: "inc_book", select:"title author"}, {path: "out_book", select: "title author"}])
     res.status(201).send(insertedAppointment)
     }
     catch (err) {
@@ -67,10 +72,10 @@ router.get("/:id", async (req, res) => {
 // returns : "Updated Appointment"
 
 router.put("/:id", routeGuard, async (req, res) => {
-    if (req.user.status === "Admin") {
+    if (req.user.admin) {
     
-        const { first_name, last_name, inc_book, out_book, time, date, status } = req.body
-        const updatedAppointment = { first_name, last_name, inc_book, out_book, time, date, status }
+        const { first_name, last_name, inc_book, out_book, time, date, status, location } = req.body
+        const updatedAppointment = { first_name, last_name, inc_book, out_book, time, date, status, location}
     
         try {
         const appointment = await AppointmentModel.findByIdAndUpdate(req.params.id, updatedAppointment, { returnDocument: "after" })
