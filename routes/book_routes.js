@@ -1,8 +1,15 @@
 import express from "express"
-import { BookModel, BookStatusModel } from "../db.js"
+import { BookModel, BookStatusModel, ImageChunksModel } from "../db.js"
 import { routeGuard } from "../middleware/authMiddleware.js"
+import { MongoClient } from "mongodb"
+import mongoose from "mongoose"
+import fs from "fs"
 
 const router = express.Router()
+
+const client = new MongoClient(process.env.ATLAS_DB_URL)
+const database = client.db("test")
+const bucket = new mongoose.mongo.GridFSBucket(database, { bucketName: 'images' })
 
 // Get All Books ordered by latest arrival
 // route :"/books",
@@ -11,12 +18,37 @@ const router = express.Router()
 // returns : "Array of books"
 
 router.get("/", async (req, res) => {
-    res.send(await BookModel.find().sort({status: 1, time_stamp: -1}).
-    populate({path: "condition", select: "name"}).
-    populate({path: "language", select: "name"}).
-    populate({path: "location", select: "-__v"}).
-    populate({path: "status", select: "name"}).
-    populate({path: "genre", select: "name"}))
+    const books = await BookModel.find().sort({ status: 1, time_stamp: -1 }).
+        populate({ path: "condition", select: "name" }).
+        populate({ path: "language", select: "name" }).
+        populate({ path: "location", select: "-__v" }).
+        populate({ path: "status", select: "name" }).
+        populate({ path: "genre", select: "name" }).
+        populate({ path: "img" })
+
+    let response = []
+    let numOfBooks = books.length
+    for (let i = 0; i < numOfBooks; i++) {
+        let b = { book: books[i] }
+        bucket.openDownloadStream(books[i].img._id).
+            pipe(fs.createWriteStream('/Users/s2861369/Desktop/assignment/term3/T3A2-B-Server/writefile')).
+            on('finish', () => {
+                const stream = fs.createReadStream('/Users/s2861369/Desktop/assignment/term3/T3A2-B-Server/writefile')
+                stream.setEncoding('binary')
+                let d = ''
+                stream.on('data', chunk => d += chunk)
+                stream.on('end', () => {
+                    b.path = Buffer.from(d, 'binary').toString('base64')
+                    response.push(b)
+                    console.log(response.length)
+                    if (response.length === numOfBooks) {
+                        console.log('sending response')
+                        res.send(response)
+                    }
+                })
+            })
+    }
+
 })
 
 // Get book by ID
@@ -25,23 +57,37 @@ router.get("/", async (req, res) => {
 // action : "Retrieves single book from ID input",
 // returns : "Single book"
 
-router.get("/:id",async (req, res) => {
+router.get("/:id", async (req, res) => {
     try {
         const book = await BookModel.findById(req.params.id).
-        populate({path: "condition", select: "name"}).
-        populate({path: "language", select: "name"}).
-        populate({path: "location", select: "-__v"}).
-        populate({path: "status", select: "name"}).
-        populate({path: "genre", select: "name"})
+            populate({ path: "condition", select: "name" }).
+            populate({ path: "language", select: "name" }).
+            populate({ path: "location", select: "-__v" }).
+            populate({ path: "status", select: "name" }).
+            populate({ path: "genre", select: "name" }).
+            populate({ path: "img" })
 
         if (book) {
-            res.send(book)
+            let response = { book: book }
+            bucket.openDownloadStream(book.img._id).
+                pipe(fs.createWriteStream('/Users/s2861369/Desktop/assignment/term3/T3A2-B-Server/writefile')).
+                on('finish', () => {
+                    const stream = fs.createReadStream('/Users/s2861369/Desktop/assignment/term3/T3A2-B-Server/writefile')
+                    stream.setEncoding('binary')
+                    let d = ''
+                    stream.on('data', chunk => d += chunk)
+                    stream.on('end', () => {
+                        response.path = Buffer.from(d, 'binary').toString('base64')
+                        res.send(response)
+                    })
+                })
         } else {
             res.status(404).send({ error: "Book not found" })
-        }}
-        catch (err) {
-            res.status(500).send ({ error : err.message })
         }
+    }
+    catch (err) {
+        res.status(500).send({ error: err.message })
+    }
 })
 
 // Update status of book
@@ -53,20 +99,20 @@ router.get("/:id",async (req, res) => {
 router.put("/:id", routeGuard, async (req, res) => {
     if (req.user.admin) {
 
-    const { title, author, condition, location, language, img, genre, description, status } = req.body
-    const updatedBook = { title, author, condition, location, language, img, genre, description, status }
-  
-    try {
-      const book = await BookModel.findByIdAndUpdate(req.params.id, updatedBook, { returnDocument: "after" })
-      if (book) {
-        res.send(book)
-      } else {
-        res.status(404).send({ error: "Book not found" })
-      }
-    }
-    catch (err) {
-      res.status(500).send({ error: err.message })
-    }
+        const { title, author, condition, location, language, img, genre, description, status } = req.body
+        const updatedBook = { title, author, condition, location, language, img, genre, description, status }
+
+        try {
+            const book = await BookModel.findByIdAndUpdate(req.params.id, updatedBook, { returnDocument: "after" })
+            if (book) {
+                res.send(book)
+            } else {
+                res.status(404).send({ error: "Book not found" })
+            }
+        }
+        catch (err) {
+            res.status(500).send({ error: err.message })
+        }
     } else {
         res.status(401).send({ error: "Unauthorised Access" })
     }
@@ -78,23 +124,24 @@ router.put("/:id", routeGuard, async (req, res) => {
 // action : "Retrieves all books in database with matching title input",
 // returns : "Array of books"
 
-router.get("/title/:title",async (req, res) => {
+router.get("/title/:title", async (req, res) => {
     try {
         const book = await BookModel.findOne({ title: req.params.title }).
-        populate({path: "condition", select: "name"}).
-        populate({path: "language", select: "name"}).
-        populate({path: "location", select: "-__v"}).
-        populate({path: "status", select: "name"}).
-        populate({path: "genre", select: "name"})
+            populate({ path: "condition", select: "name" }).
+            populate({ path: "language", select: "name" }).
+            populate({ path: "location", select: "-__v" }).
+            populate({ path: "status", select: "name" }).
+            populate({ path: "genre", select: "name" })
 
         if (book) {
             res.send(book)
         } else {
             res.status(404).send({ error: "Book not found" })
-        }}
-        catch (err) {
-            res.status(500).send ({ error : err.message })
         }
+    }
+    catch (err) {
+        res.status(500).send({ error: err.message })
+    }
 })
 
 // Get All Books by Author
@@ -103,23 +150,24 @@ router.get("/title/:title",async (req, res) => {
 // action : "Retrieves all books in database with matching author input",
 // returns : "Array of books"
 
-router.get("/author/:author",async (req, res) => {
+router.get("/author/:author", async (req, res) => {
     try {
         const book = await BookModel.find({ author: req.params.author }).
-        populate({path: "condition", select: "name"}).
-        populate({path: "language", select: "name"}).
-        populate({path: "location", select: "-__v"}).
-        populate({path: "status", select: "name"}).
-        populate({path: "genre", select: "name"})
+            populate({ path: "condition", select: "name" }).
+            populate({ path: "language", select: "name" }).
+            populate({ path: "location", select: "-__v" }).
+            populate({ path: "status", select: "name" }).
+            populate({ path: "genre", select: "name" })
 
         if (book) {
             res.send(book)
         } else {
             res.status(404).send({ error: "Book not found" })
-        }}
-        catch (err) {
-            res.status(500).send ({ error : err.message })
         }
+    }
+    catch (err) {
+        res.status(500).send({ error: err.message })
+    }
 })
 
 // Get All Books by Genre
@@ -128,23 +176,24 @@ router.get("/author/:author",async (req, res) => {
 // action : "Retrieves all books in database with matching genre input",
 // returns : "Array of books"
 
-router.get("/genre/:genre",async (req, res) => {
+router.get("/genre/:genre", async (req, res) => {
     try {
         const book = await BookModel.find({ genre: req.params.genre }).
-        populate({path: "condition", select: "name"}).
-        populate({path: "language", select: "name"}).
-        populate({path: "location", select: "-__v"}).
-        populate({path: "status", select: "name"}).
-        populate({path: "genre", select: "name"})
-        
+            populate({ path: "condition", select: "name" }).
+            populate({ path: "language", select: "name" }).
+            populate({ path: "location", select: "-__v" }).
+            populate({ path: "status", select: "name" }).
+            populate({ path: "genre", select: "name" })
+
         if (book) {
             res.send(book)
         } else {
             res.status(404).send({ error: "Book not found" })
-        }}
-        catch (err) {
-            res.status(500).send ({ error : err.message })
         }
+    }
+    catch (err) {
+        res.status(500).send({ error: err.message })
+    }
 })
 
 // Create new Book
@@ -155,19 +204,19 @@ router.get("/genre/:genre",async (req, res) => {
 router.post("/", async (req, res) => {
     try {
 
-    const { title, author, condition, location, language, img, genre, description } = req.body
-    let time_stamp = Date.now()
+        const { title, author, condition, location, language, img, genre, description } = req.body
+        let time_stamp = Date.now()
 
-    const bookStatus = await BookStatusModel.findOne({name: "Pending"})
-    let status = bookStatus._id.toString()
+        const bookStatus = await BookStatusModel.findOne({ name: "Pending" })
+        let status = bookStatus._id.toString()
 
-    const newBook = { title, author, condition, location, language, img, genre, description, time_stamp, status }
+        const newBook = { title, author, condition, location, language, img, genre, description, time_stamp, status }
 
-    const insertedBook = await BookModel.create(newBook)
-    res.status(201).send(insertedBook)
+        const insertedBook = await BookModel.create(newBook)
+        res.status(201).send(insertedBook)
     }
     catch (err) {
-        res.status(500).send ({ error : err.message })
+        res.status(500).send({ error: err.message })
     }
 })
 

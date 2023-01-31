@@ -97,7 +97,7 @@ const books = [
         condition: cons[1],
         location: locs[1],
         language: lans[0],
-        img: "63d8add840f423dc739e9ce6",
+        img: "63d8ae65c4c7068f1ab24191",
         genre: gens[0],
         description: "One ring to rule them all",
         status: bss[0]

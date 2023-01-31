@@ -10,8 +10,6 @@ import statusRoutes from "./routes/status_routes.js"
 import cors from "cors"
 import multer from 'multer'
 import { GridFsStorage } from 'multer-gridfs-storage'
-import Grid from 'gridfs-stream'
-import mongoose from "mongoose"
 
 
 const app = express()
@@ -40,6 +38,8 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage: storage }).single('file')
 
+
+
 app.post('/upload', function (req, res) {
     console.log('Uploading')
     upload(req, res, function (err) {
@@ -51,14 +51,6 @@ app.post('/upload', function (req, res) {
         return res.status(200).send(req.file)
     })
 })
-
-let gfs
-const connect = mongoose.createConnection(process.env.ATLAS_DB_URL)
-connect.once('open', () => {
-    gfs = new mongoose.mongo.GridFSBucket(connect.db, {bucketName: 'test'})
-})
-
-
 
 app.get("/", (req, res) => {
     res.send({
