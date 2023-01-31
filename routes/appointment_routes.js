@@ -100,7 +100,7 @@ router.put("/:id", routeGuard, async (req, res) => {
 // returns : "Array of appointments"
 
 router.get("/status/pending", routeGuard, async (req, res) => {
-    if (req.user.status === "Admin") {
+    if (req.user.admin) {
         try {
         const appointment = await AppointmentModel.find({ status: "Pending" }).populate([{path : "inc_book"}, {path : "out_book"}])
         
