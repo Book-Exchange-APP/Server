@@ -8,6 +8,11 @@ import conditionRoutes from "./routes/condition_routes.js"
 import genreRoutes from "./routes/genre_routes.js"
 import statusRoutes from "./routes/status_routes.js"
 import cors from "cors"
+import multer from 'multer'
+import { GridFsStorage } from 'multer-gridfs-storage'
+import Grid from 'gridfs-stream'
+import mongoose from "mongoose"
+
 
 const app = express()
 
@@ -15,10 +20,50 @@ app.use(cors())
 
 app.use(express.json())
 
+const storage = new GridFsStorage({
+    url: process.env.ATLAS_DB_URL,
+    options: { useNewUrlParser: true, useUnifiedTopology: true },
+    file: (req, file) => {
+        const match = ["image/png", "image/jpeg"];
+
+        if (match.indexOf(file.mimetype) === -1) {
+            const filename = `${Date.now()}-${file.originalname}`;
+            return filename;
+        }
+
+        return {
+            bucketName: 'images',
+            filename: `${Date.now()}-${file.originalname}`
+        };
+    }
+})
+
+const upload = multer({ storage: storage }).single('file')
+
+app.post('/upload', function (req, res) {
+    console.log('Uploading')
+    upload(req, res, function (err) {
+        if (err instanceof multer.MulterError) {
+            return res.status(500).json(err)
+        } else if (err) {
+            return res.status(500).json(err)
+        }
+        return res.status(200).send(req.file)
+    })
+})
+
+let gfs
+const connect = mongoose.createConnection(process.env.ATLAS_DB_URL)
+connect.once('open', () => {
+    gfs = new mongoose.mongo.GridFSBucket(connect.db, {bucketName: 'test'})
+})
+
+
+
 app.get("/", (req, res) => {
-    res.send({ 
+    res.send({
         info: "Book Exchange API"
-     })
+    })
 })
 
 app.use("/books", bookRoutes)

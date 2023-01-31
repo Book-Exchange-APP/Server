@@ -97,7 +97,7 @@ const books = [
         condition: cons[1],
         location: locs[1],
         language: lans[0],
-        img: "IMAGE",
+        img: "63d8add840f423dc739e9ce6",
         genre: gens[0],
         description: "One ring to rule them all",
         status: bss[0]
@@ -109,7 +109,7 @@ const books = [
         condition: cons[1],
         location: locs[1],
         language: lans[0],
-        img: "IMAGE",
+        img: "63d8add840f423dc739e9ce6",
         genre: gens[0],
         description: "Winter is Coming",
         status: bss[2]
@@ -120,7 +120,7 @@ const books = [
         condition: cons[1],
         location: locs[0],
         language: lans[0],
-        img: "IMAGE",
+        img: "63d8add840f423dc739e9ce6",
         genre: gens[1],
         description: "Somebody's eaten all the Honey",
         status: bss[0]
@@ -131,7 +131,7 @@ const books = [
         condition: cons[1],
         location: locs[0],
         language: lans[0],
-        img: "IMAGE",
+        img: "63d8add840f423dc739e9ce6",
         genre: gens[1],
         description: "Matilda, Matilda she's really very small. But inside she's TALL",
         status: bss[2]
@@ -142,7 +142,7 @@ const books = [
         condition: cons[0],
         location: locs[0],
         language: lans[0],
-        img: "IMAGE",
+        img: "63d8add840f423dc739e9ce6",
         genre: gens[1],
         description: "Big friendly giant befriending a child.",
         status: bss[0]
@@ -153,7 +153,7 @@ const books = [
         condition: cons[0],
         location: locs[1],
         language: lans[0],
-        img: "IMAGE",
+        img: "63d8add840f423dc739e9ce6",
         genre: gens[2],
         description: "You're a wizard Harry",
         status: bss[0]
@@ -164,7 +164,7 @@ const books = [
         condition: cons[0],
         location: locs[1],
         language: lans[0],
-        img: "IMAGE",
+        img: "63d8add840f423dc739e9ce6",
         genre: gens[2],
         description: "You're a wizard Harry",
         status: bss[0]
@@ -175,7 +175,7 @@ const books = [
         condition: cons[0],
         location: locs[1],
         language: lans[0],
-        img: "IMAGE",
+        img: "63d8add840f423dc739e9ce6",
         genre: gens[0],
         description: "You're a wizard Harry",
         status: bss[0]
@@ -186,7 +186,7 @@ const books = [
         condition: cons[1],
         location: locs[1],
         language: lans[0],
-        img: "IMAGE",
+        img: "63d8add840f423dc739e9ce6",
         genre: gens[0],
         description: "You're a wizard Harry",
         status: bss[2]
@@ -197,7 +197,7 @@ const books = [
         condition: cons[2],
         location: locs[1],
         language: lans[0],
-        img: "IMAGE",
+        img: "63d8add840f423dc739e9ce6",
         genre: gens[0],
         description: "You're a wizard Harry",
         status: bss[0]
@@ -208,7 +208,7 @@ const books = [
         condition: cons[0],
         location: locs[2],
         language: lans[0],
-        img: "IMAGE",
+        img: "63d8add840f423dc739e9ce6",
         genre: gens[0],
         description: "You're a wizard Harry",
         status: bss[0]
@@ -219,7 +219,7 @@ const books = [
         condition: cons[2],
         location: locs[1],
         language: lans[0],
-        img: "IMAGE",
+        img: "63d8add840f423dc739e9ce6",
         genre: gens[0],
         description: "You're a wizard Harry",
         status: bss[0]
@@ -230,7 +230,7 @@ const books = [
         condition: cons[0],
         location: locs[0],
         language: lans[3],
-        img: "IMAGE",
+        img: "63d8add840f423dc739e9ce6",
         genre: gens[0],
         description: "You're a wizard Harry",
         status: bss[0]
@@ -241,7 +241,7 @@ const books = [
         condition: cons[0],
         location: locs[1],
         language: lans[2],
-        img: "IMAGE",
+        img: "63d8add840f423dc739e9ce6",
         genre: gens[0],
         description: "You're a wizard Harry",
         status: bss[1]
@@ -252,7 +252,7 @@ const books = [
         condition: cons[0],
         location: locs[2],
         language: lans[1],
-        img: "IMAGE",
+        img: "63d8add840f423dc739e9ce6",
         genre: gens[0],
         description: "You're a wizard Harry",
         status: bss[0]

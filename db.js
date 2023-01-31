@@ -3,6 +3,11 @@ import dotenv from "dotenv"
 
 dotenv.config()
 
+// const dbConfig = {
+//     url: process.env.ATLAS_DB_URL,
+//     imgBucket: "images"
+// }
+
 mongoose.set("strictQuery", true)
 
 // Function to close Database connection
@@ -32,7 +37,7 @@ const bookSchema = new mongoose.Schema({
     location: { type: mongoose.ObjectId, ref: "Location", required: true },
     language: { type: mongoose.ObjectId, ref: "Language", required: true },
     // change to accept .png files
-    img: { type: String, required: true },
+    img: { type: mongoose.ObjectId, ref: "images.files", required: true },
     // Add list of set genres to choose from oneOf?
     genre: { type: mongoose.ObjectId, ref: "Genre", required: true },
     description: { type: String, required: true, maxLength: 100 },
@@ -113,9 +118,17 @@ const statusSchema = new mongoose.Schema({
     name: { type: String, required: true }
 })
 
-// Create status based on schema
+// Create status model based on schema
 const BookStatusModel = mongoose.model("BookStatus", statusSchema)
 const AppointmentStatusModel = mongoose.model("AppointmentStatus", statusSchema)
 
+// // Define Image schema
+// const imageSchema = new mongoose.Schema({
+//     name: { type: String, required: true },
+//     img: {type: { data: Buffer, contentType: String}, required: true}
+// })
+
+// // Create image model based on schema
+// const ImageModel = mongoose.model("Image", imageSchema)
 
 export { AppointmentModel, BookModel, UserModel, LocationModel, LanguageModel, ConditionModel, GenreModel, BookStatusModel, AppointmentStatusModel, dbClose }
