@@ -115,24 +115,26 @@ router.get("/:id", async (req, res) => {
 router.put("/:id", routeGuard, async (req, res) => {
     if (req.user.admin) {
 
-        const { title, author, condition, location, language, img, genre, description, status } = req.body
-        const updatedBook = { title, author, condition, location, language, img, genre, description, status }
-
-        try {
-            const book = await BookModel.findByIdAndUpdate(req.params.id, updatedBook, { returnDocument: "after" })
-            if (book) {
-                res.send(book)
-            } else {
-                res.status(404).send({ error: "Book not found" })
-            }
-        }
-        catch (err) {
-            res.status(500).send({ error: err.message })
-        }
+    const { title, author, condition, location, language, img, genre, description, status } = req.body
+    const updatedBook = { title, author, condition, location, language, img, genre, description, status }
+  
+    try {
+      const book = await BookModel.findByIdAndUpdate(req.params.id, updatedBook, { returnDocument: "after" }).populate([{path: 'language'}, {path: 'status'}])
+      if (book) {
+        res.status(201).send(book)
+      } else {
+        res.status(404).send({ error: "Book not found" })
+      }
+    }
+    catch (err) {
+      res.status(500).send({ error: err.message })
+    }
     } else {
         res.status(401).send({ error: "Unauthorised Access" })
-    }
+}
+
 })
+
 
 // Get Book by Title
 // route :"/books/title/:title",
@@ -228,8 +230,8 @@ router.post("/", async (req, res) => {
 
         const newBook = { title, author, condition, location, language, img, genre, description, time_stamp, status }
 
-        const insertedBook = await BookModel.create(newBook)
-        res.status(201).send(insertedBook)
+    const insertedBook = await BookModel.create(newBook)
+    res.status(201).send(insertedBook)
     }
     catch (err) {
         res.status(500).send({ error: err.message })
