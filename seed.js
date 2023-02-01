@@ -55,7 +55,8 @@ console.log("Inserted book status")
 
 const appointmentStatus = [
     { name: "Pending" },
-    { name: "Approved" }
+    { name: "Approved" },
+    { name: "Denied"}
 ]
 
 const ass = await AppointmentStatusModel.insertMany(appointmentStatus)
@@ -266,7 +267,7 @@ const appointments = [
     {
         first_name: "Tom",
         last_name: "Cruise",
-        inc_book: book[0],
+        inc_book: book[13],
         out_book: book[1],
         time: "13:00",
         date: "12/2/2023",

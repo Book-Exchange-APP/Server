@@ -6,7 +6,6 @@ const createToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET_KEY, { expiresIn: 3600 })
 }
 
-// Function to protect routes
 const routeGuard = async (req,res, next) => {
     let token
     // Check and get token from header
@@ -29,6 +28,8 @@ const routeGuard = async (req,res, next) => {
         if (!token) {
             res.status(401).send({ error : err.message })
         }
+    } else {
+        res.status(401).send( {error: 'Unauthorised Access'} )
     }
 }
 
