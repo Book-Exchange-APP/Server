@@ -9,7 +9,7 @@ import path from "path"
 const router = express.Router()
 
 const client = new MongoClient(process.env.ATLAS_DB_URL)
-const database = client.db("test")
+const database = client.db(process.env.DB_NAME)
 const bucket = new mongoose.mongo.GridFSBucket(database, { bucketName: 'images' })
 
 // Get All Books ordered by latest arrival
