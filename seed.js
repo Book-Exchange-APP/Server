@@ -1,6 +1,9 @@
-import { AppointmentModel, BookModel, LocationModel, UserModel, LanguageModel, ConditionModel, GenreModel, BookStatusModel, AppointmentStatusModel, ImageModel, ImageChunksModel, dbClose} from "./db.js"
+import { AppointmentModel, BookModel, LocationModel, UserModel, LanguageModel, ConditionModel, GenreModel, BookStatusModel, AppointmentStatusModel, ImageModel, ImageChunksModel, dbClose } from "./db.js"
 import bcrypt from 'bcryptjs'
 import mongoose from "mongoose"
+import { MongoClient } from "mongodb"
+import fs from "fs"
+
 
 await BookModel.deleteMany()
 await LocationModel.deleteMany()
@@ -21,9 +24,15 @@ const client = new MongoClient(process.env.ATLAS_DB_URL)
 const database = client.db("test")
 const bucket = new mongoose.mongo.GridFSBucket(database, { bucketName: 'images' })
 
-const id = await bucket.UploadFromBytesAsync('test.png', '/Users/s2861369/Desktop/assignment/term3/T3A2-B-Server/filestoread/test.png')
-console.log(id)
-
+const imgs = ['the_lord_of_the_rings', 'game_of_thrones', 'winnie_the_pooh', 'matilda', 'bfg', 'war_of_the_worlds', 'dune', 'hp1', 'hp2', 'hp3', 'hp4', 'hp5', 'hp6', 'hp7', 'hp8']
+let imgIds = []
+for (let i = 0; i < imgs.length; i++) {
+    const img = fs.createReadStream(`./filestoread/${imgs[i]}.jpeg`).
+        pipe(bucket.openUploadStream(`${imgs[i]}`))
+        imgIds.push(img.id)
+        console.log(img.id)
+}
+console.log('Uploaded images')
 
 const languages = [
     { name: "English" },
@@ -74,8 +83,8 @@ console.log("Inserted appointment status")
 
 
 const locations = [
-    {   
-        location: "Brisbane City", 
+    {
+        location: "Brisbane City",
         address: "5 Queen st, Brisbane City",
         postcode: 4000,
         phone: '0712341234',
@@ -107,7 +116,7 @@ const books = [
         condition: cons[1],
         location: locs[1],
         language: lans[0],
-        img: "63d9c3488e311c135c68ffb3",
+        img: imgIds[0],
         genre: gens[0],
         description: "One ring to rule them all",
         status: bss[0]
@@ -118,7 +127,7 @@ const books = [
         condition: cons[1],
         location: locs[1],
         language: lans[0],
-        img: "63d9c3668e311c135c68ffb5",
+        img: imgIds[1],
         genre: gens[0],
         description: "Winter is Coming",
         status: bss[2]
@@ -129,7 +138,7 @@ const books = [
         condition: cons[1],
         location: locs[0],
         language: lans[0],
-        img: "63d9c3728e311c135c68ffb9",
+        img: imgIds[2],
         genre: gens[1],
         description: "Somebody's eaten all the Honey",
         status: bss[0]
@@ -140,7 +149,7 @@ const books = [
         condition: cons[1],
         location: locs[0],
         language: lans[0],
-        img: "63d9c3728e311c135c68ffb9",
+        img: imgIds[3],
         genre: gens[1],
         description: "Matilda, Matilda she's really very small. But inside she's TALL",
         status: bss[2]
@@ -151,7 +160,7 @@ const books = [
         condition: cons[0],
         location: locs[0],
         language: lans[0],
-        img: "63d9c3728e311c135c68ffb9",
+        img: imgIds[4],
         genre: gens[1],
         description: "Big friendly giant befriending a child.",
         status: bss[0]
@@ -162,7 +171,7 @@ const books = [
         condition: cons[0],
         location: locs[1],
         language: lans[0],
-        img: "63d9c3728e311c135c68ffb9",
+        img: imgIds[5],
         genre: gens[2],
         description: "You're a wizard Harry",
         status: bss[0]
@@ -173,7 +182,7 @@ const books = [
         condition: cons[0],
         location: locs[1],
         language: lans[0],
-        img: "63d9c3728e311c135c68ffb9",
+        img: imgIds[6],
         genre: gens[2],
         description: "You're a wizard Harry",
         status: bss[0]
@@ -184,7 +193,7 @@ const books = [
         condition: cons[0],
         location: locs[1],
         language: lans[0],
-        img: "63d9c3728e311c135c68ffb9",
+        img: imgIds[7],
         genre: gens[0],
         description: "You're a wizard Harry",
         status: bss[0]
@@ -195,7 +204,7 @@ const books = [
         condition: cons[1],
         location: locs[1],
         language: lans[0],
-        img: "63d9c3728e311c135c68ffb9",
+        img: imgIds[8],
         genre: gens[0],
         description: "You're a wizard Harry",
         status: bss[2]
@@ -206,7 +215,7 @@ const books = [
         condition: cons[2],
         location: locs[1],
         language: lans[0],
-        img: "63d9c3728e311c135c68ffb9",
+        img: imgIds[9],
         genre: gens[0],
         description: "You're a wizard Harry",
         status: bss[0]
@@ -217,7 +226,7 @@ const books = [
         condition: cons[0],
         location: locs[2],
         language: lans[0],
-        img: "63d9c3728e311c135c68ffb9",
+        img: imgIds[10],
         genre: gens[0],
         description: "You're a wizard Harry",
         status: bss[0]
@@ -228,7 +237,7 @@ const books = [
         condition: cons[2],
         location: locs[1],
         language: lans[0],
-        img: "63d9c3728e311c135c68ffb9",
+        img: imgIds[11],
         genre: gens[0],
         description: "You're a wizard Harry",
         status: bss[0]
@@ -239,7 +248,7 @@ const books = [
         condition: cons[0],
         location: locs[0],
         language: lans[3],
-        img: "63d9c3728e311c135c68ffb9",
+        img: imgIds[12],
         genre: gens[0],
         description: "You're a wizard Harry",
         status: bss[0]
@@ -250,7 +259,7 @@ const books = [
         condition: cons[0],
         location: locs[1],
         language: lans[2],
-        img: "63d9c3728e311c135c68ffb9",
+        img: imgIds[13],
         genre: gens[0],
         description: "You're a wizard Harry",
         status: bss[1]
@@ -261,7 +270,7 @@ const books = [
         condition: cons[0],
         location: locs[2],
         language: lans[1],
-        img: "63d9c3728e311c135c68ffb9",
+        img: imgIds[14],
         genre: gens[0],
         description: "You're a wizard Harry",
         status: bss[0]
@@ -279,7 +288,7 @@ const appointments = [
         out_book: book[1],
         time: "13:00",
         date: "12/2/2023",
-        status: ass[0], 
+        status: ass[0],
         location: locs[1]
     },
     {
