@@ -21,7 +21,7 @@ const salt = await bcrypt.genSalt(10)
 const hashedPassword = await bcrypt.hash('admin', salt)
 
 const client = new MongoClient(process.env.ATLAS_DB_URL)
-const database = client.db("test")
+const database = client.db("Book-Exchange")
 const bucket = new mongoose.mongo.GridFSBucket(database, { bucketName: 'images' })
 
 const imgs = ['the_lord_of_the_rings', 'game_of_thrones', 'winnie_the_pooh', 'matilda', 'bfg', 'war_of_the_worlds', 'dune', 'hp1', 'hp2', 'hp3', 'hp4', 'hp5', 'hp6', 'hp7', 'hp8']
@@ -32,6 +32,7 @@ for (let i = 0; i < imgs.length; i++) {
         imgIds.push(img.id)
         console.log(img.id)
 }
+
 console.log('Uploaded images')
 
 const languages = [
