@@ -33,9 +33,9 @@ router.get("/", async (req, res) => {
     for (let i = 0; i < numOfBooks; i++) {
         let b = { book: books[i] }
         bucket.openDownloadStream(books[i].img._id).
-            pipe(fs.createWriteStream(`/Users/s2861369/Desktop/assignment/term3/T3A2-B-Server/writefiles/file-${i}`)).
+            pipe(fs.createWriteStream(`./writefiles/file-${i}`)).
             on('finish', () => {
-                const stream = fs.createReadStream(`/Users/s2861369/Desktop/assignment/term3/T3A2-B-Server/writefiles/file-${i}`)
+                const stream = fs.createReadStream(`./writefiles/file-${i}`)
                 stream.setEncoding('binary')
                 let d = ''
                 stream.on('data', chunk => d += chunk)
@@ -78,9 +78,9 @@ router.get("/:id", async (req, res) => {
         if (book) {
             let response = { book: book }
             bucket.openDownloadStream(book.img._id).
-                pipe(fs.createWriteStream('/Users/s2861369/Desktop/assignment/term3/T3A2-B-Server/writefile')).
+                pipe(fs.createWriteStream('./writefile')).
                 on('finish', () => {
-                    const stream = fs.createReadStream('/Users/s2861369/Desktop/assignment/term3/T3A2-B-Server/writefile')
+                    const stream = fs.createReadStream('./writefile')
                     stream.setEncoding('binary')
                     let d = ''
                     stream.on('data', chunk => d += chunk)
