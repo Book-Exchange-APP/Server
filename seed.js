@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs'
 import mongoose from "mongoose"
 import { MongoClient } from "mongodb"
 import fs from "fs"
-
+import { Stream } from "stream"
 
 await BookModel.deleteMany()
 await LocationModel.deleteMany()
@@ -21,16 +21,16 @@ const salt = await bcrypt.genSalt(10)
 const hashedPassword = await bcrypt.hash('admin', salt)
 
 const client = new MongoClient(process.env.ATLAS_DB_URL)
-const database = client.db("Book-Exchange")
+const database = client.db(process.env.DB_NAME)
 const bucket = new mongoose.mongo.GridFSBucket(database, { bucketName: 'images' })
 
-const imgs = ['the_lord_of_the_rings', 'game_of_thrones', 'winnie_the_pooh', 'matilda', 'bfg', 'war_of_the_worlds', 'dune', 'hp1', 'hp2', 'hp3', 'hp4', 'hp5', 'hp6', 'hp7', 'hp8']
+const imgs = ['the_lord_of_the_rings', 'game_of_thrones', 'winnie_the_pooh', 'matilda', 'bfg', 'war_of_the_worlds', 'dune', 'hp1', 'hp2', 'hp3', 'hp4', 'hp5', 'hp6', 'hp7', 'hp8', 'gardenning']
 let imgIds = []
 for (let i = 0; i < imgs.length; i++) {
-    const img = fs.createReadStream(`./filestoread/${imgs[i]}.jpeg`).
+    const stream = fs.createReadStream(`./filestoread/${imgs[i]}.jpeg`)
+    const img = stream.
         pipe(bucket.openUploadStream(`${imgs[i]}`))
         imgIds.push(img.id)
-        console.log(img.id)
 }
 
 console.log('Uploaded images')
@@ -57,7 +57,8 @@ console.log("Inserted conditions")
 const genres = [
     { name: "Fantasy" },
     { name: "Children" },
-    { name: "Science Fiction" }
+    { name: "Science Fiction" },
+    { name: "Gardening"}
 ]
 
 const gens = await GenreModel.insertMany(genres)
@@ -242,6 +243,17 @@ const books = [
         img: imgIds[11],
         genre: gens[0],
         description: "You're a wizard Harry",
+        status: bss[0]
+    },
+    {
+        title: "Gardening for a Lifetime",
+        author: "Sydney Eddison",
+        condition: cons[2],
+        location: locs[1],
+        language: lans[0],
+        img: imgIds[15],
+        genre: gens[3],
+        description: "Presents practical advice for older people on ways to maintain gardening activities.",
         status: bss[0]
     },
     {

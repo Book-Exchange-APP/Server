@@ -9,7 +9,7 @@ import path from "path"
 const router = express.Router()
 
 const client = new MongoClient(process.env.ATLAS_DB_URL)
-const database = client.db("Book-Exchange")
+const database = client.db(process.env.DB_NAME)
 const bucket = new mongoose.mongo.GridFSBucket(database, { bucketName: 'images' })
 
 // Get All Books ordered by latest arrival
@@ -26,7 +26,6 @@ router.get("/", async (req, res) => {
         populate({ path: "status", select: "name" }).
         populate({ path: "genre", select: "name" }).
         populate({ path: "img" })
-    // res.send(books)
 
     let response = []
     let numOfBooks = books.length
@@ -44,14 +43,14 @@ router.get("/", async (req, res) => {
                     response.push(b)                    
                     if (response.length === numOfBooks) {
                         res.send(response)
-                        fs.readdir('writefiles', (err, files) => {
-                            if (err) throw err
-                            for (const file of files) {
-                            fs.unlink(path.join('writefiles', file), (err) => {
-                                if (err) throw err
-                            })
-                            }
-                        })
+                        // fs.readdir('writefiles', (err, files) => {
+                        //     if (err) throw err
+                        //     for (const file of files) {
+                        //     fs.unlink(path.join('writefiles', file), (err) => {
+                        //         if (err) throw err
+                        //     })
+                        //     }
+                        // })
                     }
                 })
             })
@@ -78,23 +77,23 @@ router.get("/:id", async (req, res) => {
         if (book) {
             let response = { book: book }
             bucket.openDownloadStream(book.img._id).
-                pipe(fs.createWriteStream('./writefile')).
+                pipe(fs.createWriteStream('/Users/s2861369/Desktop/assignment/term3/T3A2-B-Server/writefile')).
                 on('finish', () => {
-                    const stream = fs.createReadStream('./writefile')
+                    const stream = fs.createReadStream('/Users/s2861369/Desktop/assignment/term3/T3A2-B-Server/writefile')
                     stream.setEncoding('binary')
                     let d = ''
                     stream.on('data', chunk => d += chunk)
                     stream.on('end', () => {
                         response.path = Buffer.from(d, 'binary').toString('base64')
                         res.send(response)
-                        fs.readdir('writefiles', (err, files) => {
-                            if (err) throw err
-                            for (const file of files) {
-                            fs.unlink(path.join('writefiles', file), (err) => {
-                                if (err) throw err
-                            })
-                            }
-                        })
+                        // fs.readdir('writefiles', (err, files) => {
+                        //     if (err) throw err
+                        //     for (const file of files) {
+                        //     fs.unlink(path.join('writefiles', file), (err) => {
+                        //         if (err) throw err
+                        //     })
+                        //     }
+                        // })
                     })
                 })
         } else {
