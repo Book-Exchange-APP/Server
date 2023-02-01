@@ -1,5 +1,6 @@
-import { AppointmentModel, BookModel, LocationModel, UserModel, LanguageModel, ConditionModel, GenreModel, BookStatusModel, AppointmentStatusModel, dbClose} from "./db.js"
+import { AppointmentModel, BookModel, LocationModel, UserModel, LanguageModel, ConditionModel, GenreModel, BookStatusModel, AppointmentStatusModel, ImageModel, ImageChunksModel, dbClose} from "./db.js"
 import bcrypt from 'bcryptjs'
+import mongoose from "mongoose"
 
 await BookModel.deleteMany()
 await LocationModel.deleteMany()
@@ -10,9 +11,18 @@ await ConditionModel.deleteMany()
 await GenreModel.deleteMany()
 await BookStatusModel.deleteMany()
 await AppointmentStatusModel.deleteMany()
+await ImageModel.deleteMany()
+await ImageChunksModel.deleteMany()
 
 const salt = await bcrypt.genSalt(10)
 const hashedPassword = await bcrypt.hash('admin', salt)
+
+const client = new MongoClient(process.env.ATLAS_DB_URL)
+const database = client.db("test")
+const bucket = new mongoose.mongo.GridFSBucket(database, { bucketName: 'images' })
+
+const id = await bucket.UploadFromBytesAsync('test.png', '/Users/s2861369/Desktop/assignment/term3/T3A2-B-Server/filestoread/test.png')
+console.log(id)
 
 
 const languages = [
@@ -97,11 +107,10 @@ const books = [
         condition: cons[1],
         location: locs[1],
         language: lans[0],
-        img: "63d8ae65c4c7068f1ab24191",
+        img: "63d9c3488e311c135c68ffb3",
         genre: gens[0],
         description: "One ring to rule them all",
         status: bss[0]
-
     },
     {
         title: "Game of Thrones",
@@ -109,7 +118,7 @@ const books = [
         condition: cons[1],
         location: locs[1],
         language: lans[0],
-        img: "63d8add840f423dc739e9ce6",
+        img: "63d9c3668e311c135c68ffb5",
         genre: gens[0],
         description: "Winter is Coming",
         status: bss[2]
@@ -120,7 +129,7 @@ const books = [
         condition: cons[1],
         location: locs[0],
         language: lans[0],
-        img: "63d8add840f423dc739e9ce6",
+        img: "63d9c3728e311c135c68ffb9",
         genre: gens[1],
         description: "Somebody's eaten all the Honey",
         status: bss[0]
@@ -131,7 +140,7 @@ const books = [
         condition: cons[1],
         location: locs[0],
         language: lans[0],
-        img: "63d8add840f423dc739e9ce6",
+        img: "63d9c3728e311c135c68ffb9",
         genre: gens[1],
         description: "Matilda, Matilda she's really very small. But inside she's TALL",
         status: bss[2]
@@ -142,7 +151,7 @@ const books = [
         condition: cons[0],
         location: locs[0],
         language: lans[0],
-        img: "63d8add840f423dc739e9ce6",
+        img: "63d9c3728e311c135c68ffb9",
         genre: gens[1],
         description: "Big friendly giant befriending a child.",
         status: bss[0]
@@ -153,7 +162,7 @@ const books = [
         condition: cons[0],
         location: locs[1],
         language: lans[0],
-        img: "63d8add840f423dc739e9ce6",
+        img: "63d9c3728e311c135c68ffb9",
         genre: gens[2],
         description: "You're a wizard Harry",
         status: bss[0]
@@ -164,7 +173,7 @@ const books = [
         condition: cons[0],
         location: locs[1],
         language: lans[0],
-        img: "63d8add840f423dc739e9ce6",
+        img: "63d9c3728e311c135c68ffb9",
         genre: gens[2],
         description: "You're a wizard Harry",
         status: bss[0]
@@ -175,7 +184,7 @@ const books = [
         condition: cons[0],
         location: locs[1],
         language: lans[0],
-        img: "63d8add840f423dc739e9ce6",
+        img: "63d9c3728e311c135c68ffb9",
         genre: gens[0],
         description: "You're a wizard Harry",
         status: bss[0]
@@ -186,7 +195,7 @@ const books = [
         condition: cons[1],
         location: locs[1],
         language: lans[0],
-        img: "63d8add840f423dc739e9ce6",
+        img: "63d9c3728e311c135c68ffb9",
         genre: gens[0],
         description: "You're a wizard Harry",
         status: bss[2]
@@ -197,7 +206,7 @@ const books = [
         condition: cons[2],
         location: locs[1],
         language: lans[0],
-        img: "63d8add840f423dc739e9ce6",
+        img: "63d9c3728e311c135c68ffb9",
         genre: gens[0],
         description: "You're a wizard Harry",
         status: bss[0]
@@ -208,7 +217,7 @@ const books = [
         condition: cons[0],
         location: locs[2],
         language: lans[0],
-        img: "63d8add840f423dc739e9ce6",
+        img: "63d9c3728e311c135c68ffb9",
         genre: gens[0],
         description: "You're a wizard Harry",
         status: bss[0]
@@ -219,7 +228,7 @@ const books = [
         condition: cons[2],
         location: locs[1],
         language: lans[0],
-        img: "63d8add840f423dc739e9ce6",
+        img: "63d9c3728e311c135c68ffb9",
         genre: gens[0],
         description: "You're a wizard Harry",
         status: bss[0]
@@ -230,7 +239,7 @@ const books = [
         condition: cons[0],
         location: locs[0],
         language: lans[3],
-        img: "63d8add840f423dc739e9ce6",
+        img: "63d9c3728e311c135c68ffb9",
         genre: gens[0],
         description: "You're a wizard Harry",
         status: bss[0]
@@ -241,7 +250,7 @@ const books = [
         condition: cons[0],
         location: locs[1],
         language: lans[2],
-        img: "63d8add840f423dc739e9ce6",
+        img: "63d9c3728e311c135c68ffb9",
         genre: gens[0],
         description: "You're a wizard Harry",
         status: bss[1]
@@ -252,7 +261,7 @@ const books = [
         condition: cons[0],
         location: locs[2],
         language: lans[1],
-        img: "63d8add840f423dc739e9ce6",
+        img: "63d9c3728e311c135c68ffb9",
         genre: gens[0],
         description: "You're a wizard Harry",
         status: bss[0]

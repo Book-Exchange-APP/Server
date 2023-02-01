@@ -4,6 +4,7 @@ import { routeGuard } from "../middleware/authMiddleware.js"
 import { MongoClient } from "mongodb"
 import mongoose from "mongoose"
 import fs from "fs"
+import path from "path"
 
 const router = express.Router()
 
@@ -18,32 +19,39 @@ const bucket = new mongoose.mongo.GridFSBucket(database, { bucketName: 'images' 
 // returns : "Array of books"
 
 router.get("/", async (req, res) => {
-    const books = await BookModel.find().sort({ status: 1, time_stamp: -1 }).
+    const books = await BookModel.find().
         populate({ path: "condition", select: "name" }).
         populate({ path: "language", select: "name" }).
         populate({ path: "location", select: "-__v" }).
         populate({ path: "status", select: "name" }).
         populate({ path: "genre", select: "name" }).
         populate({ path: "img" })
+    // res.send(books)
 
     let response = []
     let numOfBooks = books.length
     for (let i = 0; i < numOfBooks; i++) {
         let b = { book: books[i] }
         bucket.openDownloadStream(books[i].img._id).
-            pipe(fs.createWriteStream('/Users/s2861369/Desktop/assignment/term3/T3A2-B-Server/writefile')).
+            pipe(fs.createWriteStream(`/Users/s2861369/Desktop/assignment/term3/T3A2-B-Server/writefiles/file-${i}`)).
             on('finish', () => {
-                const stream = fs.createReadStream('/Users/s2861369/Desktop/assignment/term3/T3A2-B-Server/writefile')
+                const stream = fs.createReadStream(`/Users/s2861369/Desktop/assignment/term3/T3A2-B-Server/writefiles/file-${i}`)
                 stream.setEncoding('binary')
                 let d = ''
                 stream.on('data', chunk => d += chunk)
                 stream.on('end', () => {
                     b.path = Buffer.from(d, 'binary').toString('base64')
-                    response.push(b)
-                    console.log(response.length)
+                    response.push(b)                    
                     if (response.length === numOfBooks) {
-                        console.log('sending response')
                         res.send(response)
+                        fs.readdir('writefiles', (err, files) => {
+                            if (err) throw err
+                            for (const file of files) {
+                            fs.unlink(path.join('writefiles', file), (err) => {
+                                if (err) throw err
+                            })
+                            }
+                        })
                     }
                 })
             })
@@ -79,6 +87,14 @@ router.get("/:id", async (req, res) => {
                     stream.on('end', () => {
                         response.path = Buffer.from(d, 'binary').toString('base64')
                         res.send(response)
+                        fs.readdir('writefiles', (err, files) => {
+                            if (err) throw err
+                            for (const file of files) {
+                            fs.unlink(path.join('writefiles', file), (err) => {
+                                if (err) throw err
+                            })
+                            }
+                        })
                     })
                 })
         } else {

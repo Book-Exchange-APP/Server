@@ -38,8 +38,6 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage: storage }).single('file')
 
-
-
 app.post('/upload', function (req, res) {
     console.log('Uploading')
     upload(req, res, function (err) {
