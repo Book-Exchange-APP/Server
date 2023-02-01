@@ -73,7 +73,7 @@ router.get("/:id", async (req, res) => {
 
 router.put("/:id", routeGuard, async (req, res) => {
     if (req.user.admin) {
-    
+
         const { first_name, last_name, inc_book, out_book, time, date, status, location } = req.body
         const updatedAppointment = { first_name, last_name, inc_book, out_book, time, date, status, location}
     
@@ -86,8 +86,8 @@ router.put("/:id", routeGuard, async (req, res) => {
         }
         }
         catch (err) {
-        res.status(500).send({ error: err.message })
-    }} else {
+        res.status(500).send({ error: err.message })}
+    } else {
         res.status(401).send({ error: "Unauthorised Access" })
     }
   
@@ -99,10 +99,13 @@ router.put("/:id", routeGuard, async (req, res) => {
 // action : "Retrieves all appointments that have a status 'Pending'",
 // returns : "Array of appointments"
 
-router.get("/status/pending", routeGuard, async (req, res) => {
-    if (req.user.status === "Admin") {
+router.get("/status/pending", async (req, res) => {
+
         try {
-        const appointment = await AppointmentModel.find({ status: "Pending" }).populate([{path : "inc_book"}, {path : "out_book"}])
+        const appointmentStatus = await AppointmentStatusModel.findOne({name: "Pending"})
+        const statusId = appointmentStatus._id.toString()
+        
+        const appointment = await AppointmentModel.find({ status: statusId }).populate([{path : "inc_book"}, {path : "out_book"}])
         
         if (appointment) {
             res.send(appointment)
@@ -110,11 +113,8 @@ router.get("/status/pending", routeGuard, async (req, res) => {
             res.status(404).send({ error: "No Appointments found" })
         }}
         catch (err) {
-            res.status(500).send ({ error : err.message })
-    }} else {
-        res.status(401).send({ error: "Unauthorised Access" })
-    }
-
-})
+            res.status(500).send ({ error : err.message }) }
+}
+)
 
 export default router
