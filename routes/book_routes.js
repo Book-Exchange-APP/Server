@@ -26,7 +26,6 @@ router.get("/", async (req, res) => {
         populate({ path: "status", select: "name" }).
         populate({ path: "genre", select: "name" }).
         populate({ path: "img" })
-    // res.send(books)
 
     let response = []
     let numOfBooks = books.length
@@ -44,14 +43,14 @@ router.get("/", async (req, res) => {
                     response.push(b)                    
                     if (response.length === numOfBooks) {
                         res.send(response)
-                        fs.readdir('writefiles', (err, files) => {
-                            if (err) throw err
-                            for (const file of files) {
-                            fs.unlink(path.join('writefiles', file), (err) => {
-                                if (err) throw err
-                            })
-                            }
-                        })
+                        // fs.readdir('writefiles', (err, files) => {
+                        //     if (err) throw err
+                        //     for (const file of files) {
+                        //     fs.unlink(path.join('writefiles', file), (err) => {
+                        //         if (err) throw err
+                        //     })
+                        //     }
+                        // })
                     }
                 })
             })
@@ -78,23 +77,23 @@ router.get("/:id", async (req, res) => {
         if (book) {
             let response = { book: book }
             bucket.openDownloadStream(book.img._id).
-                pipe(fs.createWriteStream('./writefile')).
+                pipe(fs.createWriteStream('./writefiles/file')).
                 on('finish', () => {
-                    const stream = fs.createReadStream('./writefile')
+                    const stream = fs.createReadStream('./writefiles/file')
                     stream.setEncoding('binary')
                     let d = ''
                     stream.on('data', chunk => d += chunk)
                     stream.on('end', () => {
                         response.path = Buffer.from(d, 'binary').toString('base64')
                         res.send(response)
-                        fs.readdir('writefiles', (err, files) => {
-                            if (err) throw err
-                            for (const file of files) {
-                            fs.unlink(path.join('writefiles', file), (err) => {
-                                if (err) throw err
-                            })
-                            }
-                        })
+                        // fs.readdir('writefiles', (err, files) => {
+                        //     if (err) throw err
+                        //     for (const file of files) {
+                        //     fs.unlink(path.join('writefiles', file), (err) => {
+                        //         if (err) throw err
+                        //     })
+                        //     }
+                        // })
                     })
                 })
         } else {

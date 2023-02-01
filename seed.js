@@ -24,7 +24,7 @@ const client = new MongoClient(process.env.ATLAS_DB_URL)
 const database = client.db(process.env.DB_NAME)
 const bucket = new mongoose.mongo.GridFSBucket(database, { bucketName: 'images' })
 
-const imgs = ['the_lord_of_the_rings', 'game_of_thrones', 'winnie_the_pooh', 'matilda', 'bfg', 'war_of_the_worlds', 'dune', 'hp1', 'hp2', 'hp3', 'hp4', 'hp5', 'hp6', 'hp7', 'hp8']
+const imgs = ['the_lord_of_the_rings', 'game_of_thrones', 'winnie_the_pooh', 'matilda', 'bfg', 'war_of_the_worlds', 'dune', 'hp1', 'hp2', 'hp3', 'hp4', 'hp5', 'hp6', 'hp7', 'hp8', 'gardenning']
 let imgIds = []
 for (let i = 0; i < imgs.length; i++) {
     const stream = fs.createReadStream(`./filestoread/${imgs[i]}.jpeg`)
@@ -56,7 +56,8 @@ console.log("Inserted conditions")
 const genres = [
     { name: "Fantasy" },
     { name: "Children" },
-    { name: "Science Fiction" }
+    { name: "Science Fiction" },
+    { name: "Gardening"}
 ]
 
 const gens = await GenreModel.insertMany(genres)
@@ -241,6 +242,17 @@ const books = [
         img: imgIds[11],
         genre: gens[0],
         description: "You're a wizard Harry",
+        status: bss[0]
+    },
+    {
+        title: "Gardening for a Lifetime",
+        author: "Sydney Eddison",
+        condition: cons[2],
+        location: locs[1],
+        language: lans[0],
+        img: imgIds[15],
+        genre: gens[3],
+        description: "Presents practical advice for older people on ways to maintain gardening activities.",
         status: bss[0]
     },
     {
