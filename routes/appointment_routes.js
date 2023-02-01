@@ -105,7 +105,7 @@ router.get("/status/pending", async (req, res) => {
         const appointmentStatus = await AppointmentStatusModel.findOne({name: "Pending"})
         const statusId = appointmentStatus._id.toString()
         
-        const appointment = await AppointmentModel.find({ status: statusId }).populate([{path : "inc_book"}, {path : "out_book"}])
+        const appointment = await AppointmentModel.find({ status: statusId }).populate([{path : "inc_book"}, {path: "location", select: "location"}, {path : "out_book"}])
         
         if (appointment) {
             res.send(appointment)
