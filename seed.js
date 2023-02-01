@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs'
 import mongoose from "mongoose"
 import { MongoClient } from "mongodb"
 import fs from "fs"
-
+import { Stream } from "stream"
 
 await BookModel.deleteMany()
 await LocationModel.deleteMany()
@@ -21,16 +21,16 @@ const salt = await bcrypt.genSalt(10)
 const hashedPassword = await bcrypt.hash('admin', salt)
 
 const client = new MongoClient(process.env.ATLAS_DB_URL)
-const database = client.db("test")
+const database = client.db(process.env.DB_NAME)
 const bucket = new mongoose.mongo.GridFSBucket(database, { bucketName: 'images' })
 
 const imgs = ['the_lord_of_the_rings', 'game_of_thrones', 'winnie_the_pooh', 'matilda', 'bfg', 'war_of_the_worlds', 'dune', 'hp1', 'hp2', 'hp3', 'hp4', 'hp5', 'hp6', 'hp7', 'hp8']
 let imgIds = []
 for (let i = 0; i < imgs.length; i++) {
-    const img = fs.createReadStream(`./filestoread/${imgs[i]}.jpeg`).
+    const stream = fs.createReadStream(`./filestoread/${imgs[i]}.jpeg`)
+    const img = stream.
         pipe(bucket.openUploadStream(`${imgs[i]}`))
         imgIds.push(img.id)
-        console.log(img.id)
 }
 console.log('Uploaded images')
 
