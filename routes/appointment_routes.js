@@ -30,12 +30,13 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
+        console.log(req.body)
         let { first_name, last_name, inc_book, out_book, time, date, location } = req.body
         // Take incoming book details and create new Book in db
         const { title, author, condition, language, img, genre, description } = req.body.inc_book
         let time_stamp = Date.now()
-        const bookStatus = await BookStatusModel.findOne({ name: "Pending" })
-        let status = bookStatus._id.toString()
+        const incBookStatus = await BookStatusModel.findOne({ name: "Unavailable" })
+        let status = incBookStatus._id.toString()
         const newBook = { title, author, condition, location, language, img, genre, description, time_stamp, status }
         const insertedBook = await BookModel.create(newBook)
 
@@ -47,6 +48,12 @@ router.post("/", async (req, res) => {
 
         const insertedAppointment = await (await AppointmentModel.create(newAppointment)).populate([{ path: "location", select: "location" }, { path: "inc_book", select: "title author" }, { path: "out_book", select: "title author" }])
         res.status(201).send(insertedAppointment)
+
+        // Update out-book status
+        const outBookStatus = await BookStatusModel.findOne({ name: "Pending" })
+        status = outBookStatus._id.toString()
+        out_book.status = status
+        await BookModel.findByIdAndUpdate(out_book._id, out_book, { returnDocument: "after" })
     }
     catch (err) {
         res.status(500).send({ error: err.message })

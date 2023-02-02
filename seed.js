@@ -155,7 +155,7 @@ const books = [
         img: imgIds[3],
         genre: gens[1],
         description: "Matilda, Matilda she's really very small. But inside she's TALL",
-        status: bss[2]
+        status: bss[0]
     },
     {
         title: "BFG",
@@ -188,7 +188,7 @@ const books = [
         img: imgIds[6],
         genre: gens[2],
         description: "You're a wizard Harry",
-        status: bss[0]
+        status: bss[1]
     },
     {
         title: "Harry Potter and the Philosophers Stone",
