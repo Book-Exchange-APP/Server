@@ -112,8 +112,9 @@ router.get("/:id", async (req, res) => {
 // returns : "Updated book"
 
 router.put("/:id", routeGuard, async (req, res) => {
-    if (req.user.admin) {
-
+    // console.log(req.user)
+    // if (req.user.admin) {
+    console.log(req.user)
     const { title, author, condition, location, language, img, genre, description, status } = req.body
     const updatedBook = { title, author, condition, location, language, img, genre, description, status }
   
@@ -128,9 +129,9 @@ router.put("/:id", routeGuard, async (req, res) => {
     catch (err) {
       res.status(500).send({ error: err.message })
     }
-    } else {
-        res.status(401).send({ error: "Unauthorised Access" })
-}
+//     } else {
+//         res.status(401).send({ error: "Unauthorised Access" })
+// }
 
 })
 
