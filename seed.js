@@ -32,6 +32,7 @@ for (let i = 0; i < imgs.length; i++) {
         pipe(bucket.openUploadStream(`${imgs[i]}`))
         imgIds.push(img.id)
 }
+
 console.log('Uploaded images')
 
 const languages = [
