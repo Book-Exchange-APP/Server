@@ -88,7 +88,7 @@ router.get("/:id", async (req, res) => {
 // returns : "Updated Appointment"
 
 router.put("/:id", routeGuard, async (req, res) => {
-    if (req.user.admin) {
+    if (req.user != null && req.user.admin) {
 
         const { first_name, last_name, inc_book, out_book, time, date, status, location } = req.body
         const updatedAppointment = { first_name, last_name, inc_book, out_book, time, date, status, location }

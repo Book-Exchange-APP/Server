@@ -113,7 +113,7 @@ router.get("/:id", async (req, res) => {
 
 router.put("/:id", routeGuard, async (req, res) => {
 
-    if (req.user.admin) {
+    if (req.user != null && req.user.admin) {
 
     const { title, author, condition, location, language, img, genre, description, status } = req.body
     const updatedBook = { title, author, condition, location, language, img, genre, description, status }
