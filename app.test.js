@@ -141,29 +141,6 @@ describe("Application Unit tests", () =>{
         })
     })
 
-    // test('Create a new Book', async () => {
-    //     const res = await request(app).post('/books').send({
-    //             title: "Moby Dick",
-    //             author: "Herman Melville",
-    //             condition: conditions[0]._id,
-    //             location: locations[1]._id,
-    //             language: languages[2]._id,
-    //             img: "Image.jpeg",
-    //             genre: genres[0]._id,
-    //             description: "Book about a guy trapped in a whale"
-    //     })
-
-    //     expect(res.status).toBe(201)
-    //     expect(res.headers['content-type']).toMatch(/json/i)
-    //     expect(res.body._id).toBeDefined()
-    //     expect(res.body.location).toBeDefined()
-    //     expect(res.body.title).toBeDefined()
-    //     expect(res.body.title).toBe('Moby Dick')
-    //     expect(res.body.language.name).toBe('Korean')
-
-
-    // })
-
     test('Update a Book', async () => {
         const id = books[4].book._id
 
@@ -221,28 +198,6 @@ describe("Application Unit tests", () =>{
         })
     })
 
-    // test('Create a new Appointment', async () => {
-    //     const res = await request(app).post('/books').send({
-    //             title: "Moby Dick",
-    //             author: "Herman Melville",
-    //             condition: conditions[0]._id,
-    //             location: locations[1]._id,
-    //             language: languages[2]._id,
-    //             img: "Image.jpeg",
-    //             genre: genres[0]._id,
-    //             description: "Book about a guy trapped in a whale"
-    //     })
-
-    //     expect(res.status).toBe(201)
-    //     expect(res.headers['content-type']).toMatch(/json/i)
-    //     expect(res.body._id).toBeDefined()
-    //     expect(res.body.location).toBeDefined()
-    //     expect(res.body.title).toBeDefined()
-    //     expect(res.body.title).toBe('Moby Dick')
-    //     expect(res.body.language.name).toBe('Korean')
-
-
-    // })
     test('Update an Appointment PUT /appointments', async () => {
         const id = appointments[0]._id
 

@@ -57,6 +57,12 @@ app.get("/", (req, res) => {
     })
 })
 
+app.get('/tests', (req, res) => {
+    res.send(
+       
+    )
+})
+
 app.use("/books", bookRoutes)
 
 app.use("/appointments", appointmentRoutes)
