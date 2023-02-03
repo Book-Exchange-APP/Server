@@ -164,7 +164,7 @@ router.get("/status/pending", async (req, res) => {
                     }) 
                 } 
             } else {
-                        res.status(404).send({ error: "No Appointments found" })
+                        res.status(200).send({ error: "No Appointments found" })
                     }}
         catch (err) {
                 res.status(500).send({ error: err.message })
