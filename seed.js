@@ -3,7 +3,6 @@ import bcrypt from 'bcryptjs'
 import mongoose from "mongoose"
 import { MongoClient } from "mongodb"
 import fs from "fs"
-import { Stream } from "stream"
 
 await BookModel.deleteMany()
 await LocationModel.deleteMany()
@@ -84,7 +83,6 @@ const ass = await AppointmentStatusModel.insertMany(appointmentStatus)
 console.log("Inserted appointment status")
 
 
-
 const locations = [
     {
         location: "Brisbane City",
@@ -155,7 +153,7 @@ const books = [
         img: imgIds[3],
         genre: gens[1],
         description: "Matilda, Matilda she's really very small. But inside she's TALL",
-        status: bss[0]
+        status: bss[1]
     },
     {
         title: "BFG",
@@ -265,7 +263,7 @@ const books = [
         img: imgIds[12],
         genre: gens[0],
         description: "You're a wizard Harry",
-        status: bss[0]
+        status: bss[1]
     },
     {
         title: "Harry Potter and the Deathly Hallows",
@@ -276,7 +274,7 @@ const books = [
         img: imgIds[13],
         genre: gens[0],
         description: "You're a wizard Harry",
-        status: bss[1]
+        status: bss[0]
     },
     {
         title: "Harry Potter and the Cursed Child",
